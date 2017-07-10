@@ -4,14 +4,19 @@ import { EatPage} from "../eat/eat"
 import { SleepPage} from "../sleep/sleep"
 import { DoctorPage} from "../doctor/doctor"
 
+import { RepositoryProvider } from "../../providers/repository/repository";
+
+
 @Component({
   selector: 'page-home',
-  templateUrl: 'home.html'
+  templateUrl: 'home.html',
+  providers: [RepositoryProvider]
 })
 export class HomePage {
+  currentBaby: any;
 
-  constructor(public navCtrl: NavController) {
-
+  constructor(public navCtrl: NavController, public repository: RepositoryProvider) {
+    this.currentBaby = repository.getCurrentBaby();
   }
 
   itemTapped(item) {
