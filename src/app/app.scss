@@ -14,3 +14,32 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+ion-header {
+  background-image: none;
+}
+
+.toolbar-background-ios {
+  background-color: #ffffff;
+}
+
+.toolbar-ios {
+  padding: .8em;
+  height: 60px;
+}
+
+.header-ios .toolbar-background-ios, .footer-ios .toolbar-background-ios {
+  border: none;
+}
+
+.scroll-content {
+  padding: .5em 1em 0 1em;
+}
+
+.chip-ios {
+  display: flex;
+  background-color: #ffffff;
+  height: auto;
+  width: 100%;
+  justify-content: space-around;
+}
