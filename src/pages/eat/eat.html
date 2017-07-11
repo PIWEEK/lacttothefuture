@@ -10,13 +10,109 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Comida</ion-title>
+    <ion-title>Alimentar</ion-title>
   </ion-navbar>
 
 
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
+  <div>
+    <div class="feed_method" (click)="setFeedMethod('breast')" [ngClass]="{'selected': currentFeedMethod == 'breast'}">
+      <img src="assets/img/eat_breast.png" class="icon"/>
+    </div>
+    <div class="feed_method" (click)="setFeedMethod('bottle')" [ngClass]="{'selected': currentFeedMethod == 'bottle'}">
+      <img src="assets/img/eat_bottle.png" class="icon"/>
+    </div>
+    <div class="feed_method" (click)="setFeedMethod('pump')" [ngClass]="{'selected': currentFeedMethod == 'pump'}">
+      <img src="assets/img/eat_pump.png" class="icon"/>
+    </div>
+    <div class="feed_method" (click)="setFeedMethod('solid')" [ngClass]="{'selected': currentFeedMethod == 'solid'}">
+      <img src="assets/img/eat_solid.png" class="icon"/>
+    </div>
+
+  </div>
+
+  <ion-chip class="info">
+    <div class="icon_container">
+      <img src="assets/img/eat_breast.png" class="icon"/>
+    </div>
+    <div class="info_container">
+      <div class="title">
+        ALIMENTACIÓN ANTERIOR
+      </div>
+      <div>
+        Hace 3h - Acabaste en pecho izquierdo
+      </div>
+    </div>
+  </ion-chip>
+
+  <div *ngIf="currentFeedMethod == 'breast'">
+
+    <div class="feed_when">
+      <div class="feed_now" (click)="setFeedNow(true)">
+        <img [src]="currentFeedNow?'assets/img/chk_selected.png':'assets/img/chk_unselected.png'" class="icon"/> Ahora
+      </div>
+      <div class="feed_before" (click)="setFeedNow(false)">
+        <img [src]="currentFeedNow?'assets/img/chk_unselected.png':'assets/img/chk_selected.png'" class="icon"/> Introducir hora
+      </div>
+    </div>
+    <div>
+      <ion-input placeholder="Añadir comentario"></ion-input>
+    </div>
+
+
+    <div class="feed_timer" *ngIf="currentFeedNow">
+      <div class="big_timer">
+        {{ totalFeedingSeconds }}
+      </div>
+      <div class="small_timer" *ngIf="currentFeedMethod == 'breast'">
+        <div>
+          <div class="half">
+            {{ leftFeedingSeconds }}
+          </div>
+          <div class="half">
+            {{ rightFeedingSeconds }}
+          </div>
+        </div>
+        <div>
+          <div class="half">
+            <button ion-button outline round (click)="startStopFeeding('i')">
+              <span *ngIf="currentFeedBreast != 'i'">Izquierdo</span>
+              <span *ngIf="currentFeedBreast == 'i'">Pausa</span>
+            </button>
+          </div>
+          <div class="half">
+            <button ion-button outline round (click)="startStopFeeding('d')">
+              <span *ngIf="currentFeedBreast != 'd'">Derecho</span>
+              <span *ngIf="currentFeedBreast == 'd'">Pausa</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="feed_form" *ngIf="!currentFeedNow">
+      <ion-item>
+        <ion-label>De dónde</ion-label>
+        <ion-select [(ngModel)]="feedBreast">
+          <ion-option value="i">Izquierdo</ion-option>
+          <ion-option value="d">Derecho</ion-option>
+          <ion-option value="a">Ambos</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>La alimentación empieza</ion-label>
+        <ion-datetime displayFormat="DD/MM/YYYY HH:mm" [(ngModel)]="feedStartTime"></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label>La alimentación acaba</ion-label>
+        <ion-datetime displayFormat="DD/MM/YYYY HH:mm" [(ngModel)]="feedEndTime"></ion-datetime>
+      </ion-item>
+
+    </div>
+  </div>
+
 
 </ion-content>

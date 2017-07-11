@@ -21,11 +21,15 @@ export class RepositoryProvider {
         sex: 'boy',
         nextEat: {
           prediction: new Date().getTime() + 120 * 60000,
-          last: new Date().getTime() - 122 * 60000,
+          feedStartTime: new Date().getTime() - 122 * 60000,
+          feedEndTime: new Date().getTime() - 122 * 60000,
           totalToday: '2h 21min',
           mealsToday: 3,
           happy: 5,
-          nextType: 'PECHOD'
+          totalFeedingTime: 0,
+          leftFeedingTime:0,
+          rightFeedingTime:0,
+          lastFeedBreast: 'i'
         },
         nextSleep: {
           prediction: new Date().getTime()  + 240 * 60000,
