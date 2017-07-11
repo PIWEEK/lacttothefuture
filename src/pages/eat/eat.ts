@@ -2,27 +2,24 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Observable, Subscription } from 'rxjs/Rx';
 import { AlertController } from 'ionic-angular';
-import {HomePage} from '../home/home';
+import { RepositoryProvider } from "../../providers/repository/repository";
+
 
 
 @IonicPage()
 @Component({
   selector: 'page-eat',
-  templateUrl: 'eat.html',
+  templateUrl: 'eat.html'
 })
 export class EatPage {
   private $counter: Observable<number>;
   private subscription: Subscription;
   private currentFeedMethod: string;
   private currentFeedNow: boolean;
-  private feedStartTimestamp: boolean;
   private feedStartTime: Date;
-  private feedEndTime: Date;
   private feedBreast: string;
   private currentFeedBreast: string;
-  private currentFeedStart: number;
-  private currentFeedLeftStart: number;
-  private currentFeedRightStart: number;
+
 
   private totalFeedingTime: number;
   private totalFeedingSeconds: string;
@@ -35,7 +32,7 @@ export class EatPage {
   private confirmedExit: boolean = false;
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController, public repository: RepositoryProvider) {
     this.currentFeedMethod = 'breast';
     this.currentFeedNow = true;
     this.feedBreast = 'i';
@@ -116,7 +113,7 @@ export class EatPage {
       if(!this.confirmedExit) {
           let alertPopup = this.alertCtrl.create({
               title: 'No has guardado los datos',
-              message: 'Has añadido datos, pero no los has guardado. ¿Seguro que quieres volver atrás?',
+              message: 'No has guardado los datos. ¿Seguro que quieres volver atrás?',
               buttons: [{
                       text: 'Volver sin guardar',
                       handler: () => {
@@ -145,6 +142,17 @@ export class EatPage {
   private exitPage() {
       this.confirmedExit = true;
       this.navCtrl.pop();
+  }
+
+  saveData() {
+    if (this.currentFeedMethod == 'breast') {
+      if (this.totalFeedingTime>0){
+        this.repository.saveFeedData(this.feedStartTime, this.totalFeedingTime, this.leftFeedingTime, this.rightFeedingTime, this.lastFeedBreast, 5);
+        this.confirmedExit = true;
+        this.navCtrl.pop();
+      }
+    }
+
   }
 
 }

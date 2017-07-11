@@ -3,7 +3,7 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>{{currentBaby.name}}</ion-title>
+    <ion-title>{{repository.currentBaby.name}}</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -43,27 +43,27 @@
         </div>
         <div>
           <div class="item">
-            {{ currentBaby.nextEat.mealsToday }}
+            {{ repository.currentBaby.nextEat.mealsToday }}
           </div>
           <div class="item">
-            {{ currentBaby.nextEat.totalToday }}
+            {{ repository.currentBaby.nextEat.totalToday }}
           </div>
           <div class="item">
-            <img [src]="'assets/img/happy' + currentBaby.nextEat.happy+ '.png'" class="happy"/>
+            <img [src]="'assets/img/happy' + repository.currentBaby.nextEat.happy+ '.png'" class="happy"/>
           </div>
         </div>
       </div>
     </ion-card>
 
-    <ion-card (click)="itemTapped('sleep')" [ngClass]="{'sleep': currentBaby.nextSleep.status == 'DURMIENDO', 'awake': currentBaby.nextSleep.status != 'DURMIENDO'}">
-      <div class="card-title"><span *ngIf="currentBaby.nextSleep.status == 'DURMIENDO'">Se despertará en</span><span *ngIf="currentBaby.nextSleep.status != 'DURMIENDO'">Tendrá sueño en</span></div>
+    <ion-card (click)="itemTapped('sleep')" [ngClass]="{'sleep': repository.currentBaby.nextSleep.status == 'DURMIENDO', 'awake': repository.currentBaby.nextSleep.status != 'DURMIENDO'}">
+      <div class="card-title"><span *ngIf="repository.currentBaby.nextSleep.status == 'DURMIENDO'">Se despertará en</span><span *ngIf="repository.currentBaby.nextSleep.status != 'DURMIENDO'">Tendrá sueño en</span></div>
       <div class="card-subtitle">
         <div>
-          <img [src]="currentBaby.sex=='boy'?(currentBaby.nextSleep.status == 'DURMIENDO'?'assets/img/boy_sleep.png':'assets/img/boy_awake.png'):(currentBaby.nextSleep.status == 'DURMIENDO'?'assets/img/girl_sleep.png':'assets/img/girl_awake.png')" class="icon"/>
+          <img [src]="repository.currentBaby.sex=='boy'?(repository.currentBaby.nextSleep.status == 'DURMIENDO'?'assets/img/boy_sleep.png':'assets/img/boy_awake.png'):(repository.currentBaby.nextSleep.status == 'DURMIENDO'?'assets/img/girl_sleep.png':'assets/img/girl_awake.png')" class="icon"/>
           <div class="card-info">
             <div>
               <ion-chip>
-                <ion-label>{{ currentBaby.nextSleep.status}}</ion-label>
+                <ion-label>{{ repository.currentBaby.nextSleep.status}}</ion-label>
               </ion-chip>
             </div>
             <div>
@@ -80,7 +80,7 @@
             HORARIO
           </div>
           <div class="item">
-            TIEMPO <span *ngIf="currentBaby.nextSleep.status == 'DURMIENDO'">DURMIENDO</span><span *ngIf="currentBaby.nextSleep.status != 'DURMIENDO'">DESPIERTO</span>
+            TIEMPO <span *ngIf="repository.currentBaby.nextSleep.status == 'DURMIENDO'">DURMIENDO</span><span *ngIf="repository.currentBaby.nextSleep.status != 'DURMIENDO'">DESPIERTO</span>
           </div>
           <div class="item">
             ÚLTIMO SUEÑO
@@ -88,13 +88,13 @@
         </div>
         <div>
           <div class="item">
-            <img [src]="'assets/img/' + currentBaby.nextSleep.daytime+ '.png'" class="happy"/>
+            <img [src]="'assets/img/' + repository.currentBaby.nextSleep.daytime+ '.png'" class="happy"/>
           </div>
           <div class="item">
             {{ hoursSleeping }}
           </div>
           <div class="item">
-            <img [src]="'assets/img/happy' + currentBaby.nextSleep.happy+ '.png'" class="happy"/>
+            <img [src]="'assets/img/happy' + repository.currentBaby.nextSleep.happy+ '.png'" class="happy"/>
           </div>
         </div>
       </div>
@@ -124,7 +124,7 @@
             NOTAS
         </div>
         <div class="notes">
-            {{ currentBaby.nextDoctor.notes}}
+            {{ repository.currentBaby.nextDoctor.notes}}
         </div>
       </div>
     </ion-card>
