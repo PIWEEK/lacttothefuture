@@ -7,25 +7,143 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content>
   <ion-content class="card-background-page">
-    <ion-card (click)="itemTapped('sleep')">
-      <img src="http://images.stockunlimited.net/preview1300/baby-sleeping-on-moon_1281181.jpg"/>
-      <div class="card-title">Sueño</div>
-      <div class="card-subtitle">4h 3min</div>
+
+    <ion-card (click)="itemTapped('eat')" class="eat">
+      <div class="card-title">Tendrá hambre en</div>
+      <div class="card-subtitle">
+        <div>
+          <img src="assets/img/eat.png" class="icon"/>
+
+        </div>
+        <div class="timer">
+        {{ hoursNextEat }}
+        </div>
+      </div>
+      <div class="card-info">
+        <div>
+          <ion-chip>
+            <ion-label>PECHO DERECHO</ion-label>
+          </ion-chip>
+        </div>
+        <div>
+        </div>
+      </div>
+      <div class="card-data">
+        <div>
+          <div class="item">
+            COMIDAS HOY
+          </div>
+          <div class="item">
+            TOTAL HOY
+          </div>
+          <div class="item">
+            ÚLTIMA TOMA
+          </div>
+        </div>
+        <div>
+          <div class="item">
+            {{ currentBaby.nextEat.mealsToday }}
+          </div>
+          <div class="item">
+            {{ currentBaby.nextEat.totalToday }}
+          </div>
+          <div class="item">
+            <img [src]="'assets/img/happy' + currentBaby.nextEat.happy+ '.png'" class="happy"/>
+          </div>
+        </div>
+      </div>
     </ion-card>
 
-    <ion-card (click)="itemTapped('eat')">
-      <img src="http://media.istockphoto.com/vectors/baby-feeds-himself-vector-id165035146"/>
-      <div class="card-title">Hambre</div>
-      <div class="card-subtitle">2h 1min</div>
+    <ion-card (click)="itemTapped('sleep')" [ngClass]="{'sleep': currentBaby.nextSleep.status == 'DURMIENDO', 'awake': currentBaby.nextSleep.status != 'DURMIENDO'}">
+      <div class="card-title"><span *ngIf="currentBaby.nextSleep.status == 'DURMIENDO'">Se despertará en</span><span *ngIf="currentBaby.nextSleep.status != 'DURMIENDO'">Tendrá sueño en</span></div>
+      <div class="card-subtitle">
+        <div>
+          <img [src]="currentBaby.sex=='boy'?(currentBaby.nextSleep.status == 'DURMIENDO'?'assets/img/boy_sleep.png':'assets/img/boy_awake.png'):(currentBaby.nextSleep.status == 'DURMIENDO'?'assets/img/girl_sleep.png':'assets/img/girl_awake.png')" class="icon"/>
+        </div>
+        <div class="timer">
+        {{ hoursNextSleep }}
+        </div>
+      </div>
+      <div class="card-info">
+        <div>
+          <ion-chip>
+            <ion-label>{{ currentBaby.nextSleep.status}}</ion-label>
+          </ion-chip>
+        </div>
+        <div>
+        </div>
+      </div>
+      <div class="card-data">
+        <div>
+          <div class="item">
+            HORARIO
+          </div>
+          <div class="item">
+            TIEMPO <span *ngIf="currentBaby.nextSleep.status == 'DURMIENDO'">DURMIENDO</span><span *ngIf="currentBaby.nextSleep.status != 'DURMIENDO'">DESPIERTO</span>
+          </div>
+          <div class="item">
+            ÚLTIMO SUEÑO
+          </div>
+        </div>
+        <div>
+          <div class="item">
+            <img [src]="'assets/img/' + currentBaby.nextSleep.daytime+ '.png'" class="happy"/>
+          </div>
+          <div class="item">
+            {{ hoursSleeping }}
+          </div>
+          <div class="item">
+            <img [src]="'assets/img/happy' + currentBaby.nextSleep.happy+ '.png'" class="happy"/>
+          </div>
+        </div>
+      </div>
     </ion-card>
 
-    <ion-card (click)="itemTapped('doctor')">
-      <img src="https://www.christart.com/IMAGES-art9ab/clipart/1841/baby-doctor.png"/>
-      <div class="card-title">Medico</div>
-      <div class="card-subtitle">Cita en 4 días</div>
+    <ion-card (click)="itemTapped('doctor')" class="doctor">
+      <div class="card-title">Próxima cita médica en</div>
+      <div class="card-subtitle">
+        <div>
+          <img src="assets/img/doctor.png" class="icon"/>
+        </div>
+        <div class="timer">
+        {{ daysNextDoctor }}
+        </div>
+      </div>
+      <div class="card-info">
+        <div>
+          <ion-chip>
+            <ion-label>{{ dateNextDoctor }}</ion-label>
+          </ion-chip>
+        </div>
+        <div>
+        </div>
+      </div>
+      <div class="card-data">
+        <div>
+            NOTAS
+        </div>
+        <div class="notes">
+            {{ currentBaby.nextDoctor.notes}}
+        </div>
+      </div>
     </ion-card>
+
 
   </ion-content>
 </ion-content>
+
+<ion-footer>
+  <ion-chip>
+    <div class="item">
+      <img src="assets/img/eat_history.png" class="icon"/>
+    </div>
+    <div class="item">
+      <img src="assets/img/sleep_history.png" class="icon"/>
+    </div>
+    <div class="item">
+      <img src="assets/img/doctor_history.png" class="icon"/>
+    </div>
+  </ion-chip>
+</ion-footer>
