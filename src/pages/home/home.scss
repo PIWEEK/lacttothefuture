@@ -115,19 +115,9 @@ page-home {
     .footer-md{
         text-align: center;
         height: 6em;
-        .chip {
-            display: flex;
-            .chip-ios {
-              height: auto;
-              width: 100%;
-              .item {
-                margin-top: 0.5em;
-                .icon {
-                  width: 3em;
-                  margin: 0 auto;
-                }
-              }
-            }
-        }
+    }
+
+    .footer {
+      min-height: 70px;
     }
 }

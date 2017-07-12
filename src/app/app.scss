@@ -37,9 +37,16 @@ ion-header {
 }
 
 .chip-ios {
+  background: linear-gradient(to top, #ffffff 60%, transparent 100%);
   display: flex;
-  background-color: #ffffff;
   height: auto;
   width: 100%;
   justify-content: space-around;
+      .item {
+        display: flex;
+        width: 4em;
+        justify-content: center;
+        align-items: center;
+        margin-top: .5em;
+      }
 }
