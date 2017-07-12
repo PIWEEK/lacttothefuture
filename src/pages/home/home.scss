@@ -6,6 +6,9 @@ page-home {
         color: #aec6d5;
         position: absolute;
     }
+    .back-button {
+        z-index: 1000;
+    }
     .toolbar-title {
         font-family: 'ralewaybold', sans-serif;
         color: #aec6d5;
