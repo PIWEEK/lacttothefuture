@@ -59,7 +59,7 @@
       </div>
     </div>
     <div>
-      <ion-input placeholder="Añadir comentario"></ion-input>
+      <ion-input placeholder="Añadir comentario" [(ngModel)]="comment"></ion-input>
     </div>
 
 
@@ -97,9 +97,9 @@
       <ion-item>
         <ion-label>De dónde</ion-label>
         <ion-select [(ngModel)]="feedBreast">
-          <ion-option value="i">Izquierdo</ion-option>
-          <ion-option value="d">Derecho</ion-option>
-          <ion-option value="a">Ambos</ion-option>
+          <ion-option value="l">Izquierdo</ion-option>
+          <ion-option value="r">Derecho</ion-option>
+          <ion-option value="b">Ambos</ion-option>
         </ion-select>
       </ion-item>
       <ion-item>

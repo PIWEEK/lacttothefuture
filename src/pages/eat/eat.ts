@@ -41,6 +41,7 @@ export class EatPage {
   private saveDataRightFeedingTime: number;
   private saveDataLastFeedBreast: string;
   private saveDataHapiness:number;
+  private comment:string;
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController, public repository: RepositoryProvider, public modalCtrl: ModalController) {
@@ -204,7 +205,8 @@ export class EatPage {
   }
 
   saveAndExit(){
-    this.repository.saveFeedData(this.saveDataFeedStartTime, this.totalFeedingTime, this.leftFeedingTime, this.rightFeedingTime, this.lastFeedBreast, this.saveDataHapiness);
+    this.repository.saveFeedData(this.saveDataFeedStartTime, this.totalFeedingTime, this.leftFeedingTime,
+                                this.rightFeedingTime, this.lastFeedBreast, this.saveDataHapiness, this.comment);
     this.confirmedExit = true;
     this.navCtrl.pop();
   }
