@@ -20,7 +20,7 @@ export class RepositoryProvider {
           totalToday: 0,
           mealsToday: 0,
           happy: 0,
-          lastFeedBreast: 'i',
+          lastFeedBreast: 'l',
           comment: ''
         },
         nextSleep: {
@@ -81,11 +81,11 @@ export class RepositoryProvider {
 
   }
 
-  saveFeedData(feedStartTime, totalFeedingTime, leftFeedingTime, rightFeedingTime, lastFeedBreast, happy, comment) {
+  saveFeedData(feedStartTime, feedEndTime, totalFeedingTime, leftFeedingTime, rightFeedingTime, lastFeedBreast, happy, comment) {
     console.log("saveFeedData");
     var feedData = {
           feedStartTime: feedStartTime.getTime(),
-          feedEndTime: new Date().getTime(),
+          feedEndTime: feedEndTime.getTime(),
           happy: happy,
           totalFeedingTime: totalFeedingTime,
           leftFeedingTime: leftFeedingTime,
@@ -158,7 +158,7 @@ export class RepositoryProvider {
         this.cardsData.nextFeed.totalToday = 0;
         this.cardsData.nextFeed.mealsToday = 0;
         this.cardsData.nextFeed.happy = 0;
-        this.cardsData.nextFeed.lastFeedBreast = 'i';
+        this.cardsData.nextFeed.lastFeedBreast = 'l';
         this.cardsData.nextFeed.prediction = 0;
     }
 

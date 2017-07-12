@@ -43,7 +43,7 @@
         ALIMENTACIÓN ANTERIOR
       </div>
       <div>
-        Hace 3h - Acabaste en pecho izquierdo
+        {{ previousFeedText }}
       </div>
     </div>
   </ion-chip>
@@ -78,13 +78,13 @@
         </div>
         <div>
           <div class="half">
-            <button ion-button outline round (click)="startStopFeeding('i')">
+            <button ion-button outline round (click)="startStopFeeding('l')">
               <span *ngIf="currentFeedBreast != 'i'">Izquierdo</span>
               <span *ngIf="currentFeedBreast == 'i'">Pausa</span>
             </button>
           </div>
           <div class="half">
-            <button ion-button outline round (click)="startStopFeeding('d')">
+            <button ion-button outline round (click)="startStopFeeding('r')">
               <span *ngIf="currentFeedBreast != 'd'">Derecho</span>
               <span *ngIf="currentFeedBreast == 'd'">Pausa</span>
             </button>

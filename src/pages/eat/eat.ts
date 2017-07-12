@@ -18,10 +18,12 @@ export class EatPage {
   private currentFeedMethod: string;
   private currentFeedNow: boolean;
   private feedStartTime: Date;
+  private feedEndTime: Date;
   private feedStartTimeISOString: string;
   private feedEndTimeISOString: string;
   private feedBreast: string;
   private currentFeedBreast: string;
+  private previousFeedText: string;
 
 
   private totalFeedingTime: number;
@@ -36,6 +38,7 @@ export class EatPage {
 
 
   private saveDataFeedStartTime: Date;
+  private saveDataFeedEndTime: Date;
   private saveDataTotalFeedingTime: number;
   private saveDataLeftFeedingTime: number;
   private saveDataRightFeedingTime: number;
@@ -47,7 +50,7 @@ export class EatPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController, public repository: RepositoryProvider, public modalCtrl: ModalController) {
     this.currentFeedMethod = 'breast';
     this.currentFeedNow = true;
-    this.feedBreast = 'i';
+    this.feedBreast = 'l';
     this.currentFeedBreast = "";
     this.totalFeedingTime = 0;
     this.leftFeedingTime = 0;
@@ -58,6 +61,34 @@ export class EatPage {
     var now = new Date()
     this.feedStartTimeISOString = now.toISOString();
     this.feedEndTimeISOString = now.toISOString();
+
+    var txt = "";
+    if (this.repository.currentBaby.feedHistory && this.repository.currentBaby.feedHistory.length > 0){
+      var lastFeed = this.repository.currentBaby.feedHistory[this.repository.currentBaby.feedHistory.length - 1];
+      console.log("********************");
+      console.log(lastFeed);
+      var millis = new Date().getTime() - lastFeed.feedEndTime;
+      var hours = Math.floor(millis / 3600000);
+      var mins = Math.floor(((millis - (hours * 3600000)) / 60000));
+      var minsPad = ("0" + mins).slice(-2)
+
+      txt = "Hace " + hours + "h " + minsPad + " min - ";
+
+      if (lastFeed.lastFeedBreast == 'l') {
+        txt += "acabaste en pecho izquierdo";
+      } else if (lastFeed.lastFeedBreast == 'r') {
+        txt += "acabaste en pecho derecho";
+      } else if (lastFeed.lastFeedBreast == 'b') {
+        txt += "ambos pechos";
+      } else if (lastFeed.lastFeedBreast == 'o') {
+        txt += "biberón";
+      } else if (lastFeed.lastFeedBreast == 's') {
+        txt += "comida";
+      }
+    }
+
+
+    this.previousFeedText = txt;
 
 
     //every second
@@ -87,6 +118,7 @@ export class EatPage {
   startStopFeeding(breast){
     if (this.currentFeedBreast == breast){
         this.currentFeedBreast = '';
+        this.feedEndTime = new Date();
     } else{
       this.currentFeedBreast = breast;
       this.lastFeedBreast = breast;
@@ -107,7 +139,7 @@ export class EatPage {
       secondsPad = ("0" + seconds).slice(-2);
       this.totalFeedingSeconds = mins + "m " + secondsPad + "s";
 
-      if (this.currentFeedBreast == "i"){
+      if (this.currentFeedBreast == "l"){
         this.leftFeedingTime += 1000;
         mins = Math.floor(this.leftFeedingTime / 60000);
         seconds = Math.floor(((this.leftFeedingTime - (mins * 60000)) / 1000));
@@ -173,10 +205,15 @@ export class EatPage {
 
   saveData() {
     if (this.currentFeedMethod == 'breast') {
-      this.currentFeedBreast == '';
+      if (this.currentFeedBreast != ''){
+        this.currentFeedBreast == '';
+        this.feedEndTime = new Date();
+      }
+
       if (this.currentFeedNow){
         if (this.totalFeedingTime > 0){
           this.saveDataFeedStartTime = this.feedStartTime;
+          this.saveDataFeedEndTime = this.feedEndTime;
           this.saveDataTotalFeedingTime = this.totalFeedingTime;
           this.saveDataLeftFeedingTime = this.leftFeedingTime;
           this.saveDataRightFeedingTime = this.rightFeedingTime;
@@ -185,18 +222,21 @@ export class EatPage {
         }
       } else {
           this.saveDataFeedStartTime = new Date(this.feedStartTimeISOString);
+          this.saveDataFeedEndTime = new Date(this.feedEndTimeISOString);
           this.saveDataTotalFeedingTime = new Date(this.feedEndTimeISOString).getTime() - this.saveDataFeedStartTime.getTime();
           if (this.feedBreast == 'l'){
             this.saveDataLeftFeedingTime = this.saveDataTotalFeedingTime;
             this.saveDataRightFeedingTime = 0;
+            this.saveDataLastFeedBreast = 'l';
           } else if (this.feedBreast == 'r'){
             this.saveDataLeftFeedingTime = 0;
             this.saveDataRightFeedingTime = this.saveDataTotalFeedingTime;
+            this.saveDataLastFeedBreast = 'r';
           } else {
             this.saveDataLeftFeedingTime = Math.round(this.saveDataTotalFeedingTime / 2);
             this.saveDataRightFeedingTime = Math.round(this.saveDataTotalFeedingTime / 2);
+            this.saveDataLastFeedBreast = 'b';
           }
-          this.saveDataLastFeedBreast = this.feedBreast;
           this.showHappiness();
       }
 
@@ -205,8 +245,8 @@ export class EatPage {
   }
 
   saveAndExit(){
-    this.repository.saveFeedData(this.saveDataFeedStartTime, this.totalFeedingTime, this.leftFeedingTime,
-                                this.rightFeedingTime, this.lastFeedBreast, this.saveDataHapiness, this.comment);
+    this.repository.saveFeedData(this.saveDataFeedStartTime, this.saveDataFeedEndTime, this.saveDataTotalFeedingTime, this.saveDataLeftFeedingTime,
+                                this.saveDataRightFeedingTime, this.saveDataLastFeedBreast, this.saveDataHapiness, this.comment);
     this.confirmedExit = true;
     this.navCtrl.pop();
   }
