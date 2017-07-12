@@ -9,6 +9,7 @@ import { EatPage } from '../pages/eat/eat';
 import { SleepPage } from '../pages/sleep/sleep';
 import { DoctorPage } from '../pages/doctor/doctor';
 import { HappyPage } from '../pages/happy/happy';
+import { OnboardingPage } from '../pages/onboarding/onboarding';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -24,7 +25,8 @@ import { IonicStorageModule } from '@ionic/storage';
     EatPage,
     SleepPage,
     DoctorPage,
-    HappyPage
+    HappyPage,
+    OnboardingPage
   ],
   imports: [
     BrowserModule,
@@ -38,7 +40,8 @@ import { IonicStorageModule } from '@ionic/storage';
     EatPage,
     SleepPage,
     DoctorPage,
-    HappyPage
+    HappyPage,
+    OnboardingPage
   ],
   providers: [
     StatusBar,

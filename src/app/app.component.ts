@@ -8,6 +8,7 @@ import { HomePage } from '../pages/home/home';
 import { EatPage } from '../pages/eat/eat';
 import { SleepPage } from '../pages/sleep/sleep';
 import { DoctorPage } from '../pages/doctor/doctor';
+import { OnboardingPage } from '../pages/onboarding/onboarding';
 
 @Component({
   templateUrl: 'app.html'
@@ -27,7 +28,8 @@ export class MyApp {
       { title: 'Home', component: HomePage },
       { title: 'Comida', component: EatPage },
       { title: 'Sueño', component: SleepPage },
-      { title: 'Médico', component: DoctorPage }
+      { title: 'Médico', component: DoctorPage },
+      { title: 'Onboarding', component: OnboardingPage }
     ];
 
   }
