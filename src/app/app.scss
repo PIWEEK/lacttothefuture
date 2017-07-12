@@ -15,6 +15,81 @@
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
 
+@font-face {
+font-family: 'ralewaybold';
+src: url('/assets/fonts/raleway-bold-webfont.woff2') format('woff2'),
+     url('/assets/fonts/raleway-bold-webfont.woff') format('woff');
+font-weight: normal;
+font-style: normal;
+}
+
+@font-face {
+  font-family: 'ralewayextrabold';
+  src: url('/assets/fonts/raleway-extrabold-webfont.woff2') format('woff2'),
+       url('/assets/fonts/raleway-extrabold-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'ralewayextralight';
+  src: url('/assets/fonts/raleway-extralight-webfont.woff2') format('woff2'),
+       url('/assets/fonts/raleway-extralight-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'ralewayheavy';
+  src: url('/assets/fonts/raleway-heavy-webfont.woff2') format('woff2'),
+       url('/assets/fonts/raleway-heavy-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+font-family: 'ralewaylight';
+src: url('/assets/fonts/raleway-light-webfont.woff2') format('woff2'),
+     url('/assets/fonts/raleway-light-webfont.woff') format('woff');
+font-weight: normal;
+font-style: normal;
+}
+
+@font-face {
+  font-family: 'ralewaymedium';
+  src: url('/assets/fonts/raleway-medium-webfont.woff2') format('woff2'),
+       url('/assets/fonts/raleway-medium-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'ralewayregular';
+  src: url('/assets/fonts/raleway-regular-webfont.woff2') format('woff2'),
+       url('/assets/fonts/raleway-regular-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'ralewaysemibold';
+  src: url('/assets/fonts/raleway-semibold-webfont.woff2') format('woff2'),
+       url('/assets/fonts/raleway-semibold-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'ralewaythin';
+  src: url('/assets/fonts/raleway-thin-webfont.woff2') format('woff2'),
+       url('/assets/fonts/raleway-thin-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+    font-family: 'ralewayregular', sans-serif;
+}
+
 ion-header {
   background-image: none;
 }
