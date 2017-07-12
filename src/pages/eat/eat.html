@@ -34,9 +34,9 @@
 
   </div>
 
-  <ion-chip class="info">
+  <ion-chip class="info" *ngIf="repository.cardsData.nextFeed.happy > 0">
     <!-- <div class="icon_container">
-      <img [src]="'assets/img/eat_'+ lastFeed.type + '_b.png'" class="icon"/>
+      <img [src]="'assets/img/eat_'+ this.repository.cardsData.nextFeed.type + '_b.png'" class="icon"/>
     </div> -->
     <div class="info_container">
       <div class="title">
@@ -79,14 +79,14 @@
         <div>
           <div class="half">
             <button ion-button outline round (click)="startStopFeeding('l')">
-              <span *ngIf="currentFeedBreast != 'i'">Izquierdo</span>
-              <span *ngIf="currentFeedBreast == 'i'">Pausa</span>
+              <span *ngIf="currentFeedBreast != 'l'">Izquierdo</span>
+              <span *ngIf="currentFeedBreast == 'l'">Pausa</span>
             </button>
           </div>
           <div class="half">
             <button ion-button outline round (click)="startStopFeeding('r')">
-              <span *ngIf="currentFeedBreast != 'd'">Derecho</span>
-              <span *ngIf="currentFeedBreast == 'd'">Pausa</span>
+              <span *ngIf="currentFeedBreast != 'r'">Derecho</span>
+              <span *ngIf="currentFeedBreast == 'r'">Pausa</span>
             </button>
           </div>
         </div>

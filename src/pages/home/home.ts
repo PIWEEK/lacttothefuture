@@ -18,6 +18,7 @@ export class HomePage {
   private hoursNextFeed: string;
   private hoursNextSleep: string;
   private hoursSleeping: string;
+  private hoursFromLastFeeding: string;
   private daysNextDoctor: string;
   private dateNextDoctor: string;
   private lastFeedIcon: string;
@@ -92,14 +93,14 @@ export class HomePage {
 
       this.lastFeedIcon = "";
       this.lastFeedText = '??';
+      this.hoursFromLastFeeding = '??';
 
       if (this.repository.currentBaby.feedHistory && this.repository.currentBaby.feedHistory.length > 0){
-        var lastFeed = this.repository.currentBaby.feedHistory[this.repository.currentBaby.feedHistory.length - 1];
-        if (lastFeed.type == 'breast') {
-          if (lastFeed.lastFeedBreast == 'l') {
+        if (this.repository.cardsData.nextFeed.lastFeedType == 'breast') {
+          if (this.repository.cardsData.nextFeed.lastFeedBreast == 'l') {
             this.lastFeedIcon = 'left_breast';
             this.lastFeedText = 'PECHO IZQUIERDO';
-          } else if (lastFeed.lastFeedBreast == 'r') {
+          } else if (this.repository.cardsData.nextFeed.lastFeedBreast == 'r') {
             this.lastFeedIcon = 'right_breast';
             this.lastFeedText = 'PECHO DERECHO';
           } else {
@@ -107,71 +108,97 @@ export class HomePage {
             this.lastFeedText = 'AMBOS PECHOS';
           }
         }
+
+          millis = now - this.repository.cardsData.nextFeed.feedEndTime;
+          if (millis > 0){
+            hours = Math.floor(millis / 3600000);
+            mins = Math.floor(((millis - (hours * 3600000)) / 60000));
+            minsPad = ("0" + mins).slice(-2)
+          } else {
+            hours = 0
+            minsPad = "00"
+          }
+          this.hoursFromLastFeeding = hours + "h "+minsPad+"min";
+
       }
+
+
 
 
     } else {
       //No data
       this.hoursNextFeed = "??";
+      this.lastFeedIcon = 'eat_bottle';
+      this.lastFeedText = 'NO HAY DATOS';
     }
 
 
     // Sleep prediction
-    millis = this.repository.cardsData.nextSleep.prediction - now;
-    if (millis > 0){
-      hours = Math.floor(millis / 3600000);
-      mins = Math.floor(((millis - (hours * 3600000)) / 60000));
-      minsPad = ("0" + mins).slice(-2)
-    } else {
-      hours = 0
-      minsPad = "00"
-    }
-    this.hoursNextSleep = hours + "h "+minsPad+"min";
+    if (this.repository.cardsData.nextSleep.happy > 0){
+      millis = this.repository.cardsData.nextSleep.prediction - now;
+      if (millis > 0){
+        hours = Math.floor(millis / 3600000);
+        mins = Math.floor(((millis - (hours * 3600000)) / 60000));
+        minsPad = ("0" + mins).slice(-2)
+      } else {
+        hours = 0
+        minsPad = "00"
+      }
+      this.hoursNextSleep = hours + "h "+minsPad+"min";
 
-    // Sleeping
-    millis = now - this.repository.cardsData.nextSleep.timestamp;
-    if (millis > 0){
-      hours = Math.floor(millis / 3600000);
-      mins = Math.floor(((millis - (hours * 3600000)) / 60000));
-      minsPad = ("0" + mins).slice(-2)
+      // Sleeping
+      millis = now - this.repository.cardsData.nextSleep.timestamp;
+      if (millis > 0){
+        hours = Math.floor(millis / 3600000);
+        mins = Math.floor(((millis - (hours * 3600000)) / 60000));
+        minsPad = ("0" + mins).slice(-2)
+      } else {
+        hours = 0
+        minsPad = "00"
+      }
+      this.hoursSleeping = hours + "h "+minsPad+"min";
     } else {
-      hours = 0
-      minsPad = "00"
+      this.hoursNextSleep = "??";
+      this.hoursSleeping = "";
     }
-    this.hoursSleeping = hours + "h "+minsPad+"min";
 
 
     // Doctor
-    var nextDoctor = "0h";
-    var appointment = new Date(this.repository.cardsData.nextDoctor.timestamp);
+    if (this.repository.cardsData.nextDoctor.timestamp > 0) {
+      var nextDoctor = "0h";
+      var appointment = new Date(this.repository.cardsData.nextDoctor.timestamp);
 
-    this.dateNextDoctor = appointment.getDate() +
-      "/" +("0"+(appointment.getMonth()+1)).slice(-2) +
-      "/" + appointment.getFullYear()
-      + " " + ("0"+appointment.getHours()).slice(-2)
-      + ":" + ("0"+appointment.getMinutes()).slice(-2);
+      this.dateNextDoctor = appointment.getDate() +
+        "/" +("0"+(appointment.getMonth()+1)).slice(-2) +
+        "/" + appointment.getFullYear()
+        + " " + ("0"+appointment.getHours()).slice(-2)
+        + ":" + ("0"+appointment.getMinutes()).slice(-2);
 
-    millis = this.repository.cardsData.nextDoctor.timestamp - now;
-    if (millis >0) {
-      var days = Math.floor(millis / 86400000);
-      if (days > 1){
-          nextDoctor = days +" días"
-      } else if (days == 1) {
-          nextDoctor = "Mañana"
-      } else {
-        if (today.getDate() != appointment.getDate()){
-          //Less than 24h, but tomorrow
-          nextDoctor = "Mañana"
+      millis = this.repository.cardsData.nextDoctor.timestamp - now;
+      if (millis >0) {
+        var days = Math.floor(millis / 86400000);
+        if (days > 1){
+            nextDoctor = days +" días"
+        } else if (days == 1) {
+            nextDoctor = "Mañana"
         } else {
-          hours = Math.floor(millis / 3600000);
-          mins = Math.floor(((millis - (hours * 3600000)) / 60000));
-          minsPad = ("0" + mins).slice(-2)
-          nextDoctor = hours + "h "+minsPad+"min";
+          if (today.getDate() != appointment.getDate()){
+            //Less than 24h, but tomorrow
+            nextDoctor = "Mañana"
+          } else {
+            hours = Math.floor(millis / 3600000);
+            mins = Math.floor(((millis - (hours * 3600000)) / 60000));
+            minsPad = ("0" + mins).slice(-2)
+            nextDoctor = hours + "h "+minsPad+"min";
+          }
         }
       }
-    }
 
-    this.daysNextDoctor = nextDoctor;
+      this.daysNextDoctor = nextDoctor;
+    } else {
+      this.dateNextDoctor = "NO HAY CITAS";
+      this.daysNextDoctor = "";
+    }
   }
 
 }

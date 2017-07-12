@@ -45,7 +45,6 @@ export class EatPage {
   private saveDataLastFeedBreast: string;
   private saveDataHapiness:number;
   private comment:string;
-  private lastFeed: any;
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController, public repository: RepositoryProvider, public modalCtrl: ModalController) {
@@ -64,24 +63,23 @@ export class EatPage {
     this.feedEndTimeISOString = now.toISOString();
 
     var txt = "";
-    if (this.repository.currentBaby.feedHistory && this.repository.currentBaby.feedHistory.length > 0){
-      this.lastFeed = this.repository.currentBaby.feedHistory[this.repository.currentBaby.feedHistory.length - 1];
-      var millis = new Date().getTime() - this.lastFeed.feedEndTime;
+    if (this.repository.cardsData.nextFeed.happy > 0){
+      var millis = new Date().getTime() - this.repository.cardsData.nextFeed.feedEndTime;
       var hours = Math.floor(millis / 3600000);
       var mins = Math.floor(((millis - (hours * 3600000)) / 60000));
       var minsPad = ("0" + mins).slice(-2)
 
       txt = "Hace " + hours + "h " + minsPad + " min - ";
 
-      if (this.lastFeed.lastFeedBreast == 'l') {
+      if (this.repository.cardsData.nextFeed.lastFeedBreast == 'l') {
         txt += "acabaste en pecho izquierdo";
-      } else if (this.lastFeed.lastFeedBreast == 'r') {
+      } else if (this.repository.cardsData.nextFeed.lastFeedBreast == 'r') {
         txt += "acabaste en pecho derecho";
-      } else if (this.lastFeed.lastFeedBreast == 'b') {
+      } else if (this.repository.cardsData.nextFeed.lastFeedBreast == 'b') {
         txt += "ambos pechos";
-      } else if (this.lastFeed.lastFeedBreast == 'o') {
+      } else if (this.repository.cardsData.nextFeed.lastFeedBreast == 'o') {
         txt += "biberón";
-      } else if (this.lastFeed.lastFeedBreast == 's') {
+      } else if (this.repository.cardsData.nextFeed.lastFeedBreast == 's') {
         txt += "comida";
       }
     }
