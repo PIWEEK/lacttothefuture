@@ -111,7 +111,6 @@ export class HomePage {
             this.lastFeedIcon = 'eat_bottle';
             this.lastFeedText = (this.repository.cardsData.nextFeed.bottleType=='formula')?'FÓRMULA':((this.repository.cardsData.nextFeed.bottleType=='mother')?'EXTRAÍDA':'AGUA');
         } else if (this.repository.cardsData.nextFeed.lastFeedType == 'solid') {
-            console.log("solid");
             this.lastFeedIcon = 'eat_solid';
             this.lastFeedText = this.repository.cardsData.nextFeed.solidName;
             if (this.lastFeedText && this.lastFeedText.length > 25){

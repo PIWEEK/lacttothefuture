@@ -1,3 +1,38 @@
 page-doctor {
+    &.ion-page {
+        font-family: 'ralewayregular', sans-serif;
+    }
+    .bar-button,
+    .bar-buttons {
+        color: #aec6d5;
+        position: absolute;
+    }
+    .bar-buttons {
+        right: 3.2em;
+        top: 1.2em;
+    }
+    .toolbar-title {
+        font-family: 'ralewaybold', sans-serif;
+        color: #aec6d5;
+        width: 100%;
+        text-align: center;
+        font-size: 1.6em;
+    }
+
+    .doctor_title {
+        text-align: center;
+        margin: 1em 0;
+        .icon {
+            margin: 0 auto;
+            width: 12em;
+        }
+    }
+
+    .content {
+        background: linear-gradient(#38d6c8, #c2e99e);
+        text-align: center;
+    }
+
+
 
 }

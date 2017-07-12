@@ -93,6 +93,10 @@ export class RepositoryProvider {
   }
 
   saveFeedData(feedStartTime, feedEndTime, totalFeedingTime, leftFeedingTime, rightFeedingTime, lastFeedBreast, happy, comment, type, quantity, bottleType, solidName) {
+    if (!this.currentBaby.feedHistory){
+      this.currentBaby.feedHistory = [];
+    }
+
     var feedData = {
           feedStartTime: feedStartTime.getTime(),
           feedEndTime: feedEndTime.getTime(),
@@ -118,19 +122,24 @@ export class RepositoryProvider {
 
   saveDoctorData(date, comment) {
 
+    if (!this.currentBaby.doctorHistory){
+      this.currentBaby.doctorHistory = [];
+    }
+
     var doctorData = {
           timestamp: date.getTime(),
           comment: comment
     }
 
-    this.currentBaby.doctorHistory.push(doctorData);
     var i =0;
-    while (this.currentBaby.doctorHistory[i] < doctorData.timestamp){
-      i+=1;
+    if (this.currentBaby.doctorHistory.length > 0){
+      while (this.currentBaby.doctorHistory[i] < doctorData.timestamp){
+        i+=1;
+      }
     }
 
-    this.currentBaby.doctorHistory.splice(i, 0, doctorData);
 
+    this.currentBaby.doctorHistory.splice(i, 0, doctorData);
     this.saveToLocalStorage();
 
     this.updateCardData();
@@ -148,6 +157,16 @@ export class RepositoryProvider {
       this.babiesList = JSON.parse(val);
       if (this.babiesList && this.babiesList.length > 0){
         this.currentBaby = this.babiesList[0];
+        if (!this.currentBaby.feedHistory){
+          this.currentBaby.feedHistory = [];
+        }
+        if (!this.currentBaby.sleepHistory){
+          this.currentBaby.sleepHistory = [];
+        }
+        if (!this.currentBaby.doctorHistory){
+          this.currentBaby.doctorHistory = [];
+        }
+
         this.updateCardData();
       } else {
         //TODO
@@ -207,14 +226,17 @@ export class RepositoryProvider {
     this.cardsData.nextDoctor.timestamp = -1;
     this.cardsData.nextDoctor.notes = "";
     if (this.currentBaby.doctorHistory && this.currentBaby.doctorHistory.length > 0){
-      i = 0;
       var now = new Date().getTime();
-      while (this.currentBaby.doctorHistory[i].timestamp > now){
+      i = 0;
+      var nextAppointment = this.currentBaby.doctorHistory[i];
+      while (nextAppointment && nextAppointment.timestamp < now){
         i += 1;
+        nextAppointment = this.currentBaby.doctorHistory[i];
       }
-      if (i < this.currentBaby.doctorHistory.length){
-        this.cardsData.nextDoctor.timestamp = this.currentBaby.doctorHistory[i].timestamp;
-        this.cardsData.nextDoctor.notes = this.currentBaby.doctorHistory[i].notes;
+
+      if (nextAppointment) {
+        this.cardsData.nextDoctor.timestamp = nextAppointment.timestamp;
+        this.cardsData.nextDoctor.comment = nextAppointment.comment;
       }
     }
 
