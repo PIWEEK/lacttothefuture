@@ -18,6 +18,8 @@ export class EatPage {
   private currentFeedMethod: string;
   private currentFeedNow: boolean;
   private feedStartTime: Date;
+  private feedStartTimeISOString: string;
+  private feedEndTimeISOString: string;
   private feedBreast: string;
   private currentFeedBreast: string;
 
@@ -33,6 +35,14 @@ export class EatPage {
   private confirmedExit: boolean = false;
 
 
+  private saveDataFeedStartTime: Date;
+  private saveDataTotalFeedingTime: number;
+  private saveDataLeftFeedingTime: number;
+  private saveDataRightFeedingTime: number;
+  private saveDataLastFeedBreast: string;
+  private saveDataHapiness:number;
+
+
   constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController, public repository: RepositoryProvider, public modalCtrl: ModalController) {
     this.currentFeedMethod = 'breast';
     this.currentFeedNow = true;
@@ -44,7 +54,9 @@ export class EatPage {
     this.totalFeedingSeconds = "0m 00s";
     this.leftFeedingSeconds = "0m 00s";
     this.rightFeedingSeconds = "0m 00s";
-    this.feedStartTime = null;
+    var now = new Date()
+    this.feedStartTimeISOString = now.toISOString();
+    this.feedEndTimeISOString = now.toISOString();
 
 
     //every second
@@ -149,7 +161,8 @@ export class EatPage {
   showHappiness() {
    let profileModal = this.modalCtrl.create(HappyPage, {  });
    profileModal.onDidDismiss(data => {
-     this.saveAndExit(data.happiness)
+     this.saveDataHapiness = data.happiness;
+     this.saveAndExit()
    });
    profileModal.present();
   }
@@ -159,15 +172,39 @@ export class EatPage {
 
   saveData() {
     if (this.currentFeedMethod == 'breast') {
-      if (this.totalFeedingTime>0){
-        this.showHappiness();
+      this.currentFeedBreast == '';
+      if (this.currentFeedNow){
+        if (this.totalFeedingTime > 0){
+          this.saveDataFeedStartTime = this.feedStartTime;
+          this.saveDataTotalFeedingTime = this.totalFeedingTime;
+          this.saveDataLeftFeedingTime = this.leftFeedingTime;
+          this.saveDataRightFeedingTime = this.rightFeedingTime;
+          this.saveDataLastFeedBreast = this.lastFeedBreast;
+          this.showHappiness();
+        }
+      } else {
+          this.saveDataFeedStartTime = new Date(this.feedStartTimeISOString);
+          this.saveDataTotalFeedingTime = new Date(this.feedEndTimeISOString).getTime() - this.saveDataFeedStartTime.getTime();
+          if (this.feedBreast == 'l'){
+            this.saveDataLeftFeedingTime = this.saveDataTotalFeedingTime;
+            this.saveDataRightFeedingTime = 0;
+          } else if (this.feedBreast == 'r'){
+            this.saveDataLeftFeedingTime = 0;
+            this.saveDataRightFeedingTime = this.saveDataTotalFeedingTime;
+          } else {
+            this.saveDataLeftFeedingTime = Math.round(this.saveDataTotalFeedingTime / 2);
+            this.saveDataRightFeedingTime = Math.round(this.saveDataTotalFeedingTime / 2);
+          }
+          this.saveDataLastFeedBreast = this.feedBreast;
+          this.showHappiness();
       }
+
     }
 
   }
 
-  saveAndExit(hapiness){
-    this.repository.saveFeedData(this.feedStartTime, this.totalFeedingTime, this.leftFeedingTime, this.rightFeedingTime, this.lastFeedBreast, hapiness);
+  saveAndExit(){
+    this.repository.saveFeedData(this.saveDataFeedStartTime, this.totalFeedingTime, this.leftFeedingTime, this.rightFeedingTime, this.lastFeedBreast, this.saveDataHapiness);
     this.confirmedExit = true;
     this.navCtrl.pop();
   }

@@ -104,11 +104,11 @@
       </ion-item>
       <ion-item>
         <ion-label>La alimentación empieza</ion-label>
-        <ion-datetime displayFormat="DD/MM/YYYY HH:mm" [(ngModel)]="feedStartTime"></ion-datetime>
+        <ion-datetime displayFormat="DD/MM/YYYY HH:mm" pickerFormat="DD MMMM YYYY HH:mm" [(ngModel)]="feedStartTimeISOString"></ion-datetime>
       </ion-item>
       <ion-item>
         <ion-label>La alimentación acaba</ion-label>
-        <ion-datetime displayFormat="DD/MM/YYYY HH:mm" [(ngModel)]="feedEndTime"></ion-datetime>
+        <ion-datetime displayFormat="DD/MM/YYYY HH:mm" pickerFormat="DD MMMM YYYY HH:mm" [(ngModel)]="feedEndTimeISOString"></ion-datetime>
       </ion-item>
 
     </div>
