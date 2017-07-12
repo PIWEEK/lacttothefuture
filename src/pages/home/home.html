@@ -31,13 +31,13 @@
       </div>
       <div class="card-data">
         <div>
-          <div class="item">
+          <div class="item-title">
             COMIDAS HOY
           </div>
-          <div class="item">
+          <div class="item-title">
             TOTAL HOY
           </div>
-          <div class="item">
+          <div class="item-title">
             ÚLTIMA TOMA
           </div>
         </div>
@@ -76,13 +76,13 @@
       </div>
       <div class="card-data">
         <div>
-          <div class="item">
+          <div class="item-title">
             HORARIO
           </div>
-          <div class="item">
+          <div class="item-title">
             TIEMPO <span *ngIf="repository.cardsData.nextSleep.status == 'DURMIENDO'">DURMIENDO</span><span *ngIf="repository.cardsData.nextSleep.status != 'DURMIENDO'">DESPIERTO</span>
           </div>
-          <div class="item">
+          <div class="item-title">
             ÚLTIMO SUEÑO
           </div>
         </div>

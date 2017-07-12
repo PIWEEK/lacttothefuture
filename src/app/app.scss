@@ -94,34 +94,25 @@ ion-header {
   background-image: none;
 }
 
-.toolbar-background-ios {
+.toolbar-background-md {
   background-color: #ffffff;
 }
 
-.toolbar-ios {
+.toolbar-md {
   padding: .8em;
   height: 60px;
 }
 
-.header-ios .toolbar-background-ios, .footer-ios .toolbar-background-ios {
+.header-md .toolbar-background-md, .footer-md .toolbar-background-md {
   border: none;
 }
 
-.scroll-content {
-  padding: .5em 1em 0 1em;
+.header-md {
+  &::after {
+    background-image: none;
+  }
 }
 
-.chip-ios {
-  background: linear-gradient(to top, #ffffff 60%, transparent 100%);
-  display: flex;
-  height: auto;
-  width: 100%;
-  justify-content: space-around;
-      .item {
-        display: flex;
-        width: 4em;
-        justify-content: center;
-        align-items: center;
-        margin-top: .5em;
-      }
+.scroll-content {
+  padding: .5em .8em 0 .8em;
 }

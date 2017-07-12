@@ -7,6 +7,7 @@ page-home {
         position: absolute;
     }
     .toolbar-title {
+        font-family: 'ralewaybold', sans-serif;
         color: #aec6d5;
         width: 100%;
         text-align: center;
@@ -25,7 +26,7 @@ page-home {
             cursor: pointer;
             overflow: hidden;
             margin: 0;
-            margin-bottom: 3.0em;
+            margin-bottom: 2em;
             height: 20em;
             width: 100%;
 
@@ -45,7 +46,7 @@ page-home {
 
         .card-title {
             top: 1em;
-            font-size: 1.5em;
+            font-size: 1.3em;
             width: 100%;
             font-weight: bold;
             color: #fff;
@@ -65,19 +66,19 @@ page-home {
               justify-content: center;
             }
             .icon {
-              width: 5em;
+              width: 4em;
             }
             .timer {
-                font-size: 2.0em;
+                font-size: 1.4em;
+                font-family: 'ralewaybold', sans-serif;
             }
         }
 
         .card-info {
-            font-size: 1.25em;
+            font-size: 1.1em;
             width: 100%;
             div {
                 display:inline-block;
-                width: 48%;
                 text-align: center;
             }
             .chip {
@@ -85,17 +86,28 @@ page-home {
             }
             .label {
                 color: #7a4bc5;
+                font-size: .9em;
+                font-family: 'ralewaymedium', sans-serif;
             }
         }
         .card-data {
-            font-size: 1.25em;
             position: absolute;
-            top: 12em;
+            top: 14em;
             width: 100%;
             color:white;
             .item {
+                font-size: 1.2em;
+                font-family: 'ralewaybold', sans-serif;
                 display:inline-block;
                 width: 32%;
+                img {
+                    margin-top: .2em;
+                }
+            }
+            .item-title {
+                display:inline-block;
+                width: 32%;
+                font-size: .8em;
             }
             .notes {
                 padding: 0 2em;
@@ -116,11 +128,31 @@ page-home {
     }
 
     .footer-md{
+        background: linear-gradient(to top, #ffffff 60%, transparent 100%);
         text-align: center;
-        height: 6em;
+        height: 5em;
     }
 
     .footer {
-      min-height: 70px;
+      min-height: 60px;
+      background: linear-gradient(to top, #ffffff 60%, transparent 100%);
+          .chip-md {
+            background: transparent;
+            display: flex;
+            height: auto;
+            width: 100%;
+            justify-content: space-around;
+                .item {
+                  display: flex;
+                  width: 4em;
+                  justify-content: center;
+                  align-items: center;
+                  margin-top: .5em;
+                }
+          }
+    }
+
+    .label-ios {
+        font-family: 'ralewaymedium', sans-serif;
     }
 }
