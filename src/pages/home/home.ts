@@ -85,11 +85,11 @@ export class HomePage {
         hours = Math.floor(millis / 3600000);
         mins = Math.floor(((millis - (hours * 3600000)) / 60000));
         minsPad = ("0" + mins).slice(-2)
+        this.hoursNextFeed = hours + "h "+minsPad+"min";
       } else {
-        hours = 0
-        minsPad = "00"
+        this.hoursNextFeed = "AHORA";
       }
-      this.hoursNextFeed = hours + "h "+minsPad+"min";
+
 
       this.lastFeedIcon = "";
       this.lastFeedText = '??';
@@ -124,11 +124,11 @@ export class HomePage {
           hours = Math.floor(millis / 3600000);
           mins = Math.floor(((millis - (hours * 3600000)) / 60000));
           minsPad = ("0" + mins).slice(-2)
+          this.hoursFromLastFeeding = hours + "h "+minsPad+"min";
         } else {
-          hours = 0
-          minsPad = "00"
+          this.hoursFromLastFeeding = "AHORA";
         }
-        this.hoursFromLastFeeding = hours + "h "+minsPad+"min";
+
 
       }
 
@@ -150,11 +150,11 @@ export class HomePage {
         hours = Math.floor(millis / 3600000);
         mins = Math.floor(((millis - (hours * 3600000)) / 60000));
         minsPad = ("0" + mins).slice(-2)
+        this.hoursNextSleep = hours + "h "+minsPad+"min";
       } else {
-        hours = 0
-        minsPad = "00"
+        this.hoursNextSleep = "AHORA";
       }
-      this.hoursNextSleep = hours + "h "+minsPad+"min";
+
 
       // Sleeping
       millis = now - this.repository.cardsData.nextSleep.timestamp;
@@ -162,11 +162,11 @@ export class HomePage {
         hours = Math.floor(millis / 3600000);
         mins = Math.floor(((millis - (hours * 3600000)) / 60000));
         minsPad = ("0" + mins).slice(-2)
+        this.hoursSleeping = hours + "h "+minsPad+"min";
       } else {
-        hours = 0
-        minsPad = "00"
+        this.hoursSleeping = "AHORA";
       }
-      this.hoursSleeping = hours + "h "+minsPad+"min";
+
     } else {
       this.hoursNextSleep = "??";
       this.hoursSleeping = "";
@@ -202,6 +202,8 @@ export class HomePage {
             nextDoctor = hours + "h "+minsPad+"min";
           }
         }
+      } else {
+        this.dateNextDoctor = "AHORA";
       }
 
       this.daysNextDoctor = nextDoctor;

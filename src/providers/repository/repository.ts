@@ -32,7 +32,7 @@ export class RepositoryProvider {
         nextSleep: {
           prediction: 0,
           timestamp: 0,
-          status: "DESPIERTO",
+          status: "AWAKE",
           happy: 0,
           daytime: 'morning'
         },
@@ -58,7 +58,7 @@ export class RepositoryProvider {
     this.babiesList = [
       {
         name:'Diego',
-        sex: 'boy',
+        sex: 'girl',
         feedHistory: [
          /* {
             feedStartTime: new Date().getTime() - 122 * 60000,
@@ -145,6 +145,32 @@ export class RepositoryProvider {
     this.updateCardData();
   }
 
+  saveSleepData(date, comment, happy) {
+
+    if (!this.currentBaby.sleepHistory){
+      this.currentBaby.sleepHistory = [];
+    }
+
+    var status = 'SLEEPING';
+    if (this.cardsData.nextSleep.status == 'SLEEPING') {
+      status = 'AWAKE';
+    }
+
+    var sleepData = {
+          timestamp: date.getTime(),
+          comment: comment,
+          status: status,
+          happy: happy
+    }
+
+    this.currentBaby.sleepHistory.push(sleepData);
+
+
+    this.saveToLocalStorage();
+
+    this.updateCardData();
+  }
+
 
 
   saveToLocalStorage(){
@@ -222,9 +248,38 @@ export class RepositoryProvider {
     }
 
 
+    // Sleep
+    this.cardsData.nextSleep.timestamp = -1;
+    this.cardsData.nextSleep.comment = "";
+    this.cardsData.nextSleep.happy = 0;
+    this.cardsData.nextSleep.prediction = 0;
+    if (this.currentBaby.sleepHistory && this.currentBaby.sleepHistory.length > 0){
+      this.cardsData.nextSleep.timestamp = this.currentBaby.sleepHistory[this.currentBaby.sleepHistory.length - 1].timestamp;
+      this.cardsData.nextSleep.comment = this.currentBaby.sleepHistory[this.currentBaby.sleepHistory.length - 1].comment;
+      this.cardsData.nextSleep.happy = this.currentBaby.sleepHistory[this.currentBaby.sleepHistory.length - 1].happy;
+      this.cardsData.nextSleep.status = this.currentBaby.sleepHistory[this.currentBaby.sleepHistory.length - 1].status;
+      if (this.cardsData.nextSleep.status == 'SLEEPING'){
+        this.cardsData.nextSleep.prediction = this.predictSleepTime();
+      } else {
+        this.cardsData.nextSleep.prediction = this.predictAwakeTime();
+      }
+
+      var date = new Date(this.cardsData.nextSleep.timestamp)
+      if (date.getHours() < 9) {
+        this.cardsData.nextSleep.daytime = 'night'
+      } else if (date.getHours() < 15) {
+        this.cardsData.nextSleep.daytime = 'morning'
+      } else if (date.getHours() < 21) {
+        this.cardsData.nextSleep.daytime = 'afternoon'
+      } else {
+        this.cardsData.nextSleep.daytime = 'night'
+      }
+
+    }
+
     // Doctor
     this.cardsData.nextDoctor.timestamp = -1;
-    this.cardsData.nextDoctor.notes = "";
+    this.cardsData.nextDoctor.comment = "";
     if (this.currentBaby.doctorHistory && this.currentBaby.doctorHistory.length > 0){
       var now = new Date().getTime();
       i = 0;
@@ -247,6 +302,18 @@ export class RepositoryProvider {
     //TODO: Call ML
     //For now, 3 hours later
     return this.currentBaby.feedHistory[this.currentBaby.feedHistory.length-1].feedEndTime + 180 * 60000;
+  }
+
+  predictSleepTime() {
+    //TODO: Call ML
+    //For now, 4 hours later
+    return this.currentBaby.sleepHistory[this.currentBaby.sleepHistory.length-1].timestamp + 240 * 60000;
+  }
+
+  predictAwakeTime() {
+    //TODO: Call ML
+    //For now, 4 hours later
+    return this.currentBaby.sleepHistory[this.currentBaby.sleepHistory.length-1].timestamp + 240 * 60000;
   }
 
 }

@@ -55,15 +55,15 @@
       </div>
     </ion-card>
 
-    <ion-card (click)="itemTapped('sleep')" [ngClass]="{'sleep': repository.cardsData.nextSleep.status == 'DURMIENDO', 'awake': repository.cardsData.nextSleep.status != 'DURMIENDO'}">
-      <div class="card-title"><span *ngIf="repository.cardsData.nextSleep.status == 'DURMIENDO'">Se despertará en</span><span *ngIf="repository.cardsData.nextSleep.status != 'DURMIENDO'">Tendrá sueño en</span></div>
+    <ion-card (click)="itemTapped('sleep')" [ngClass]="{'sleep': repository.cardsData.nextSleep.status == 'SLEEPING', 'awake': repository.cardsData.nextSleep.status != 'SLEEPING'}">
+      <div class="card-title"><span *ngIf="repository.cardsData.nextSleep.status == 'SLEEPING'">Se despertará en</span><span *ngIf="repository.cardsData.nextSleep.status != 'SLEEPING'">Tendrá sueño en</span></div>
       <div class="card-subtitle">
         <div>
-          <img [src]="repository.currentBaby.sex=='boy'?(repository.cardsData.nextSleep.status == 'DURMIENDO'?'assets/img/boy_sleep.png':'assets/img/boy_awake.png'):(repository.cardsData.nextSleep.status == 'DURMIENDO'?'assets/img/girl_sleep.png':'assets/img/girl_awake.png')" class="icon"/>
+          <img [src]="repository.currentBaby.sex=='boy'?(repository.cardsData.nextSleep.status == 'SLEEPING'?'assets/img/boy_sleep.png':'assets/img/boy_awake.png'):(repository.cardsData.nextSleep.status == 'SLEEPING'?'assets/img/girl_sleep.png':'assets/img/girl_awake.png')" class="icon"/>
           <div class="card-info">
             <div>
               <ion-chip>
-                <ion-label *ngIf="repository.cardsData.nextSleep.happy > 0">{{ repository.cardsData.nextSleep.status}}</ion-label>
+                <ion-label *ngIf="repository.cardsData.nextSleep.happy > 0"><span *ngIf="repository.cardsData.nextSleep.status == 'SLEEPING'">DURMIENDO</span><span *ngIf="repository.cardsData.nextSleep.status != 'SLEEPING'">DESPIERTO</span></ion-label>
                 <ion-label *ngIf="repository.cardsData.nextSleep.happy <= 0">NO HAY DATOS</ion-label>
               </ion-chip>
             </div>
@@ -81,7 +81,7 @@
             HORARIO
           </div>
           <div class="item-title">
-            TIEMPO <span *ngIf="repository.cardsData.nextSleep.status == 'DURMIENDO'">DURMIENDO</span><span *ngIf="repository.cardsData.nextSleep.status != 'DURMIENDO'">DESPIERTO</span>
+            TIEMPO <span *ngIf="repository.cardsData.nextSleep.status == 'SLEEPING'">DURMIENDO</span><span *ngIf="repository.cardsData.nextSleep.status != 'SLEEPING'">DESPIERTO</span>
           </div>
           <div class="item-title">
             ÚLTIMO SUEÑO

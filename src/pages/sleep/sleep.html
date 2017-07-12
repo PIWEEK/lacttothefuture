@@ -1,21 +1,35 @@
-<!--
-  Generated template for the SleepPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 
-  <ion-navbar>
+    <ion-navbar>
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Sueño</ion-title>
+
+    <ion-buttons end>
+      <button ion-button icon-only (click)="saveData()">
+        <ion-icon name="checkmark"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
+
 
 </ion-header>
 
+<ion-content [ngClass]="{'sleep': repository.cardsData.nextSleep.status == 'SLEEPING', 'awake': repository.cardsData.nextSleep.status != 'SLEEPING'}">
+  <div class="sleep_title">
+    <img [src]="repository.currentBaby.sex=='boy'?(repository.cardsData.nextSleep.status == 'SLEEPING'?'assets/img/boy_sleep.png':'assets/img/boy_awake.png'):(repository.cardsData.nextSleep.status == 'SLEEPING'?'assets/img/girl_sleep.png':'assets/img/girl_awake.png')" class="icon"/>
+  </div>
 
-<ion-content padding>
+  <div class="sleep_form">
+    <ion-item>
+      <ion-label><span *ngIf="repository.cardsData.nextSleep.status == 'SLEEPING'">¿Cuándo se ha despertado?</span><span *ngIf="repository.cardsData.nextSleep.status != 'SLEEPING'">¿Cuándo se ha dormido?</span></ion-label>
+      <ion-datetime displayFormat="DD/MM/YYYY HH:mm" pickerFormat="DD MMMM YYYY HH:mm" [(ngModel)]="sleepTimeISOString"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label>Notas</ion-label>
+      <ion-textarea [(ngModel)]="comments"></ion-textarea>
+    </ion-item>
 
+  </div>
 </ion-content>
