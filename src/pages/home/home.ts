@@ -107,18 +107,29 @@ export class HomePage {
             this.lastFeedIcon = 'both_breast'
             this.lastFeedText = 'AMBOS PECHOS';
           }
+        } else if (this.repository.cardsData.nextFeed.lastFeedType == 'bottle') {
+            this.lastFeedIcon = 'eat_bottle';
+            this.lastFeedText = (this.repository.cardsData.nextFeed.bottleType=='formula')?'FÓRMULA':((this.repository.cardsData.nextFeed.bottleType=='mother')?'EXTRAÍDA':'AGUA');
+        } else if (this.repository.cardsData.nextFeed.lastFeedType == 'solid') {
+            console.log("solid");
+            this.lastFeedIcon = 'eat_solid';
+            this.lastFeedText = this.repository.cardsData.nextFeed.solidName;
+            if (this.lastFeedText && this.lastFeedText.length > 25){
+              this.lastFeedText = this.lastFeedText.substr(0,22);
+              this.lastFeedText += '...';
+            }
         }
 
-          millis = now - this.repository.cardsData.nextFeed.feedEndTime;
-          if (millis > 0){
-            hours = Math.floor(millis / 3600000);
-            mins = Math.floor(((millis - (hours * 3600000)) / 60000));
-            minsPad = ("0" + mins).slice(-2)
-          } else {
-            hours = 0
-            minsPad = "00"
-          }
-          this.hoursFromLastFeeding = hours + "h "+minsPad+"min";
+        millis = now - this.repository.cardsData.nextFeed.feedEndTime;
+        if (millis > 0){
+          hours = Math.floor(millis / 3600000);
+          mins = Math.floor(((millis - (hours * 3600000)) / 60000));
+          minsPad = ("0" + mins).slice(-2)
+        } else {
+          hours = 0
+          minsPad = "00"
+        }
+        this.hoursFromLastFeeding = hours + "h "+minsPad+"min";
 
       }
 

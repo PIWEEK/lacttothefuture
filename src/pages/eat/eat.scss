@@ -26,12 +26,12 @@ page-eat {
 
     .feed_method{
         display: inline-block;
-        width: 24%;
+        width: 32%;
         text-align: center;
         margin: 1em 0;
         .icon {
             margin: 0 auto;
-            width: 4em;
+            width: 6em;
         }
         &.selected{
             border-bottom: 2px solid white;

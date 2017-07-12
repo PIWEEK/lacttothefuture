@@ -24,7 +24,10 @@ export class RepositoryProvider {
           comment: '',
           type: '',
           feedEndTime: -1,
-          feedStartTime: -1
+          feedStartTime: -1,
+          quantity: 0,
+          bottleType: '',
+          solidName: ''
         },
         nextSleep: {
           prediction: 0,
@@ -67,7 +70,10 @@ export class RepositoryProvider {
             lastFeedType: 'breast',
             lastFeedBreast: 'r',
             comment: '',
-            type: 'breast'
+            type: 'breast',
+            quantity: 0,
+            bottleType: '',
+            solidName: ''
           }*/
         ]
       },
@@ -86,8 +92,7 @@ export class RepositoryProvider {
 
   }
 
-  saveFeedData(feedStartTime, feedEndTime, totalFeedingTime, leftFeedingTime, rightFeedingTime, lastFeedBreast, happy, comment, type) {
-    console.log("saveFeedData");
+  saveFeedData(feedStartTime, feedEndTime, totalFeedingTime, leftFeedingTime, rightFeedingTime, lastFeedBreast, happy, comment, type, quantity, bottleType, solidName) {
     var feedData = {
           feedStartTime: feedStartTime.getTime(),
           feedEndTime: feedEndTime.getTime(),
@@ -97,10 +102,14 @@ export class RepositoryProvider {
           rightFeedingTime: rightFeedingTime,
           lastFeedBreast: lastFeedBreast,
           comment: comment,
-          type: type
+          type: type,
+          quantity: quantity,
+          bottleType: bottleType,
+          solidName: solidName
     }
 
     this.currentBaby.feedHistory.push(feedData);
+
 
     this.saveToLocalStorage();
 
@@ -139,7 +148,6 @@ export class RepositoryProvider {
       this.babiesList = JSON.parse(val);
       if (this.babiesList && this.babiesList.length > 0){
         this.currentBaby = this.babiesList[0];
-        console.log(this.currentBaby);
         this.updateCardData();
       } else {
         //TODO
@@ -153,6 +161,7 @@ export class RepositoryProvider {
   }
 
   updateCardData() {
+    var i;
 
     if (this.currentBaby.feedHistory && this.currentBaby.feedHistory.length > 0){
         //Calculate today values
@@ -161,7 +170,7 @@ export class RepositoryProvider {
 
         var mealsToday = 0;
 
-        for (var i=this.currentBaby.feedHistory.length-1;i>=0;i--){
+        for (i=this.currentBaby.feedHistory.length-1;i>=0;i--){
           var feedDate = new Date(this.currentBaby.feedHistory[i].feedStartTime);
           feedDate.setHours(0, 0, 0, 0);
           if (feedDate.getTime() != today.getTime()){
@@ -180,6 +189,8 @@ export class RepositoryProvider {
         this.cardsData.nextFeed.prediction = this.predictFeed();
         this.cardsData.nextFeed.feedEndTime = lastFeed.feedEndTime;
         this.cardsData.nextFeed.feedStartTime = lastFeed.feedStartTime;
+        this.cardsData.nextFeed.bottleType = lastFeed.bottleType;
+        this.cardsData.nextFeed.solidName = lastFeed.solidName;
     } else {
         this.cardsData.nextFeed.mealsToday = 0;
         this.cardsData.nextFeed.happy = 0;
@@ -187,6 +198,8 @@ export class RepositoryProvider {
         this.cardsData.nextFeed.prediction = 0;
         this.cardsData.nextFeed.feedEndTime = -1;
         this.cardsData.nextFeed.feedStartTime = -1;
+        this.cardsData.nextFeed.bottleType = '';
+        this.cardsData.nextFeed.solidName = '';
     }
 
 
@@ -194,7 +207,7 @@ export class RepositoryProvider {
     this.cardsData.nextDoctor.timestamp = -1;
     this.cardsData.nextDoctor.notes = "";
     if (this.currentBaby.doctorHistory && this.currentBaby.doctorHistory.length > 0){
-      var i = 0;
+      i = 0;
       var now = new Date().getTime();
       while (this.currentBaby.doctorHistory[i].timestamp > now){
         i += 1;

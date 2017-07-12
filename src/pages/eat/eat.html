@@ -25,9 +25,6 @@
     <div class="feed_method" (click)="setFeedMethod('bottle')" [ngClass]="{'selected': currentFeedMethod == 'bottle'}">
       <img src="assets/img/eat_bottle.png" class="icon"/>
     </div>
-    <div class="feed_method" (click)="setFeedMethod('pump')" [ngClass]="{'selected': currentFeedMethod == 'pump'}">
-      <img src="assets/img/eat_pump.png" class="icon"/>
-    </div>
     <div class="feed_method" (click)="setFeedMethod('solid')" [ngClass]="{'selected': currentFeedMethod == 'solid'}">
       <img src="assets/img/eat_solid.png" class="icon"/>
     </div>
@@ -48,6 +45,10 @@
     </div>
   </ion-chip>
 
+  <div>
+      <ion-input placeholder="Añadir comentario" [(ngModel)]="comment"></ion-input>
+  </div>
+
   <div *ngIf="currentFeedMethod == 'breast'">
 
     <div class="feed_when">
@@ -58,9 +59,7 @@
         <img [src]="currentFeedNow?'assets/img/chk_unselected.png':'assets/img/chk_selected.png'" class="icon"/> Introducir hora
       </div>
     </div>
-    <div>
-      <ion-input placeholder="Añadir comentario" [(ngModel)]="comment"></ion-input>
-    </div>
+
 
 
     <div class="feed_timer" *ngIf="currentFeedNow">
@@ -112,6 +111,42 @@
       </ion-item>
 
     </div>
+  </div>
+
+  <div class="feed_form" *ngIf="currentFeedMethod == 'bottle'">
+    <ion-item>
+      <ion-label>Tipo</ion-label>
+      <ion-select [(ngModel)]="feedBottleType">
+        <ion-option value="formula">Fórmula</ion-option>
+        <ion-option value="mother">Extraída</ion-option>
+        <ion-option value="water">Agua</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>Cuándo</ion-label>
+      <ion-datetime displayFormat="DD/MM/YYYY HH:mm" pickerFormat="DD MMMM YYYY HH:mm" [(ngModel)]="feedStartTimeISOString"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label>Cantidad (ml)</ion-label>
+      <ion-datetime displayFormat="YYYY" pickerFormat="YYYY" min="0001" max="0999" [(ngModel)]="feedQuantityISOString"></ion-datetime>
+    </ion-item>
+
+  </div>
+
+  <div class="feed_form" *ngIf="currentFeedMethod == 'solid'">
+    <ion-item>
+      <ion-label>Cuándo</ion-label>
+      <ion-datetime displayFormat="DD/MM/YYYY HH:mm" pickerFormat="DD MMMM YYYY HH:mm" [(ngModel)]="feedStartTimeISOString"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label>Alimento</ion-label>
+      <ion-input [(ngModel)]="feedSolidName"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Cantidad (gr)</ion-label>
+      <ion-datetime displayFormat="YYYY" pickerFormat="YYYY" min="0001" max="0999" [(ngModel)]="feedQuantityISOString"></ion-datetime>
+    </ion-item>
+
   </div>
 
 

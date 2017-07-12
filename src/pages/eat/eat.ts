@@ -21,9 +21,12 @@ export class EatPage {
   private feedEndTime: Date;
   private feedStartTimeISOString: string;
   private feedEndTimeISOString: string;
+  private feedQuantityISOString: string;
   private feedBreast: string;
   private currentFeedBreast: string;
   private previousFeedText: string;
+  private feedBottleType: string;
+  private feedSolidName: string;
 
 
   private totalFeedingTime: number;
@@ -44,6 +47,9 @@ export class EatPage {
   private saveDataRightFeedingTime: number;
   private saveDataLastFeedBreast: string;
   private saveDataHapiness:number;
+  private saveDataQuantity:number;
+  private saveDataFeedBottleType:string;
+  private saveDataSolidName: string;
   private comment:string;
 
 
@@ -58,9 +64,13 @@ export class EatPage {
     this.totalFeedingSeconds = "0m 00s";
     this.leftFeedingSeconds = "0m 00s";
     this.rightFeedingSeconds = "0m 00s";
+    this.feedBottleType = "formula";
     var now = new Date()
     this.feedStartTimeISOString = now.toISOString();
     this.feedEndTimeISOString = now.toISOString();
+    var year = new Date();
+    year.setFullYear(100)
+    this.feedQuantityISOString = year.toISOString();
 
     var txt = "";
     if (this.repository.cardsData.nextFeed.happy > 0){
@@ -71,16 +81,23 @@ export class EatPage {
 
       txt = "Hace " + hours + "h " + minsPad + " min - ";
 
-      if (this.repository.cardsData.nextFeed.lastFeedBreast == 'l') {
-        txt += "acabaste en pecho izquierdo";
-      } else if (this.repository.cardsData.nextFeed.lastFeedBreast == 'r') {
-        txt += "acabaste en pecho derecho";
-      } else if (this.repository.cardsData.nextFeed.lastFeedBreast == 'b') {
-        txt += "ambos pechos";
-      } else if (this.repository.cardsData.nextFeed.lastFeedBreast == 'o') {
-        txt += "biberón";
-      } else if (this.repository.cardsData.nextFeed.lastFeedBreast == 's') {
-        txt += "comida";
+      if (this.repository.cardsData.nextFeed.lastFeedType == 'breast'){
+        if (this.repository.cardsData.nextFeed.lastFeedBreast == 'l') {
+          txt += "acabaste en pecho izquierdo";
+        } else if (this.repository.cardsData.nextFeed.lastFeedBreast == 'r') {
+          txt += "acabaste en pecho derecho";
+        } else if (this.repository.cardsData.nextFeed.lastFeedBreast == 'b') {
+          txt += "ambos pechos";
+        } else if (this.repository.cardsData.nextFeed.lastFeedBreast == 'o') {
+          txt += "biberón";
+        } else if (this.repository.cardsData.nextFeed.lastFeedBreast == 's') {
+          txt += "comida";
+        }
+      } else if (this.repository.cardsData.nextFeed.lastFeedType == 'bottle'){
+        txt += "biberón de "
+        txt += (this.repository.cardsData.nextFeed.bottleType=='formula')?'fórmula':((this.repository.cardsData.nextFeed.bottleType=='mother')?'leche extraída':'agua');
+      } else if (this.repository.cardsData.nextFeed.lastFeedType == 'solid'){
+        txt += this.repository.cardsData.nextFeed.solidName;
       }
     }
 
@@ -207,6 +224,10 @@ export class EatPage {
         this.feedEndTime = new Date();
       }
 
+      this.saveDataQuantity = 0;
+      this.saveDataFeedBottleType = '';
+      this.saveDataSolidName = '';
+
       if (this.currentFeedNow){
         if (this.totalFeedingTime > 0){
           this.saveDataFeedStartTime = this.feedStartTime;
@@ -215,6 +236,7 @@ export class EatPage {
           this.saveDataLeftFeedingTime = this.leftFeedingTime;
           this.saveDataRightFeedingTime = this.rightFeedingTime;
           this.saveDataLastFeedBreast = this.lastFeedBreast;
+
           this.showHappiness();
         }
       } else {
@@ -237,13 +259,36 @@ export class EatPage {
           this.showHappiness();
       }
 
+    } else if (this.currentFeedMethod == 'bottle') {
+        this.saveDataFeedStartTime = new Date(this.feedStartTimeISOString);
+        this.saveDataFeedEndTime = this.saveDataFeedStartTime;
+        this.saveDataTotalFeedingTime = 0;
+        this.saveDataLeftFeedingTime = 0;
+        this.saveDataRightFeedingTime = 0;
+        this.saveDataLastFeedBreast = '';
+        this.saveDataSolidName = '';
+        this.saveDataQuantity = new Date(this.feedQuantityISOString).getFullYear();
+        this.saveDataFeedBottleType = this.feedBottleType;
+        this.showHappiness();
+    } else if (this.currentFeedMethod == 'solid') {
+        this.saveDataFeedStartTime = new Date(this.feedStartTimeISOString);
+        this.saveDataFeedEndTime = this.saveDataFeedStartTime;
+        this.saveDataTotalFeedingTime = 0;
+        this.saveDataLeftFeedingTime = 0;
+        this.saveDataRightFeedingTime = 0;
+        this.saveDataLastFeedBreast = '';
+        this.saveDataSolidName = this.feedSolidName;
+        this.saveDataQuantity = new Date(this.feedQuantityISOString).getFullYear();
+        this.saveDataFeedBottleType = '';
+        this.showHappiness();
     }
 
   }
 
   saveAndExit(){
     this.repository.saveFeedData(this.saveDataFeedStartTime, this.saveDataFeedEndTime, this.saveDataTotalFeedingTime, this.saveDataLeftFeedingTime,
-                                this.saveDataRightFeedingTime, this.saveDataLastFeedBreast, this.saveDataHapiness, this.comment, this.currentFeedMethod);
+                                this.saveDataRightFeedingTime, this.saveDataLastFeedBreast, this.saveDataHapiness, this.comment, this.currentFeedMethod,
+                                this.saveDataQuantity, this.saveDataFeedBottleType, this.saveDataSolidName);
     this.confirmedExit = true;
     this.navCtrl.pop();
   }
