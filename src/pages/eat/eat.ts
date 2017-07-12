@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { Observable, Subscription } from 'rxjs/Rx';
 import { AlertController } from 'ionic-angular';
 import { RepositoryProvider } from "../../providers/repository/repository";
+import { HappyPage } from "../happy/happy";
 
 
 
@@ -32,7 +33,7 @@ export class EatPage {
   private confirmedExit: boolean = false;
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController, public repository: RepositoryProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController, public repository: RepositoryProvider, public modalCtrl: ModalController) {
     this.currentFeedMethod = 'breast';
     this.currentFeedNow = true;
     this.feedBreast = 'i';
@@ -144,15 +145,31 @@ export class EatPage {
       this.navCtrl.pop();
   }
 
+
+  showHappiness() {
+   let profileModal = this.modalCtrl.create(HappyPage, {  });
+   profileModal.onDidDismiss(data => {
+     this.saveAndExit(data.happiness)
+   });
+   profileModal.present();
+  }
+
+
+
+
   saveData() {
     if (this.currentFeedMethod == 'breast') {
       if (this.totalFeedingTime>0){
-        this.repository.saveFeedData(this.feedStartTime, this.totalFeedingTime, this.leftFeedingTime, this.rightFeedingTime, this.lastFeedBreast, 5);
-        this.confirmedExit = true;
-        this.navCtrl.pop();
+        this.showHappiness();
       }
     }
 
+  }
+
+  saveAndExit(hapiness){
+    this.repository.saveFeedData(this.feedStartTime, this.totalFeedingTime, this.leftFeedingTime, this.rightFeedingTime, this.lastFeedBreast, hapiness);
+    this.confirmedExit = true;
+    this.navCtrl.pop();
   }
 
 }

@@ -1,0 +1,14 @@
+page-happy {
+    &.ion-page {
+        height: 10em;
+    }
+    .happiness{
+        display: inline-block;
+        text-align: center;
+        width: 19%;
+
+        .icon {
+            width: 4em;
+        }
+    }
+}
