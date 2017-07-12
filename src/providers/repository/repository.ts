@@ -7,22 +7,19 @@ export class RepositoryProvider {
 
   public currentBaby: any;
   private babiesList: any;
+  public cardsData: any;
+
 
   constructor(private storage: Storage) {
-    //this.createSampleData()
-    this.currentBaby = {
-        name:'',
-        sex: 'boy',
-        nextEat: {
+    //TODO: For now, we clear the data every time. Remove this clear ASAP
+    this.storage.set('lact_data', '{}');
+
+    this.cardsData = {
+        nextFeed: {
           prediction: 0,
-          feedStartTime: 0,
-          feedEndTime: 0,
-          totalToday: '',
+          totalToday: 0,
           mealsToday: 0,
-          happy: 4,
-          totalFeedingTime: 0,
-          leftFeedingTime:0,
-          rightFeedingTime:0,
+          happy: 0,
           lastFeedBreast: 'i'
         },
         nextSleep: {
@@ -35,44 +32,45 @@ export class RepositoryProvider {
         nextDoctor: {
           timestamp: 0,
           notes: ""
-        },
-        feedHistory: []
+        }
+    }
+
+
+    //this.createSampleData()
+    this.currentBaby = {
+        name:'',
+        sex: 'boy',
+        feedHistory: [],
+        sleepHistory: [],
+        doctorHistory: []
       }
       this.loadFromLocalStorage()
   }
 
   createSampleData() {
-
     this.babiesList = [
       {
         name:'Diego',
         sex: 'boy',
-        nextEat: {
-          prediction: new Date().getTime() + 120 * 60000,
-          feedStartTime: new Date().getTime() - 122 * 60000,
-          feedEndTime: new Date().getTime() - 122 * 60000,
-          totalToday: '2h 21min',
-          mealsToday: 3,
-          happy: 5,
-          totalFeedingTime: 0,
-          leftFeedingTime:0,
-          rightFeedingTime:0,
-          lastFeedBreast: 'i'
-        },
-        nextSleep: {
-          prediction: new Date().getTime()  + 240 * 60000,
-          timestamp: new Date().getTime()  - 37 * 60000,
-          status: "DESPIERTO",
-          happy: 4,
-          daytime: 'afternoon'
-        },
-        nextDoctor: {
-          timestamp: new Date().getTime()  + 1.2 * 24 * 60 * 60000,
-          notes: "Cita con el pediatra por fiebre y vómitos. Malestar general, sobre todo de noche, que no hay quién le duerma."
-        },
-        feedHistory: []
+        feedHistory: [
+          {
+            feedStartTime: new Date().getTime() - 122 * 60000,
+            feedEndTime: new Date().getTime() - 111 * 60000,
+            happy: 5,
+            totalFeedingTime: 8000,
+            leftFeedingTime: 3000,
+            rightFeedingTime: 5000,
+            lastFeedBreast: 'r'
+          }
+        ]
       },
-      {name:'Pepe'}
+      {
+        name:'Sonia',
+        sex: 'girl',
+        feedHistory: [],
+        sleepHistory: [],
+        doctorHistory: []
+      }
     ]
 
     this.currentBaby = this.babiesList[0]
@@ -83,16 +81,10 @@ export class RepositoryProvider {
 
   saveFeedData(feedStartTime, totalFeedingTime, leftFeedingTime, rightFeedingTime, lastFeedBreast, happy) {
     console.log("saveFeedData");
-    console.log(this);
-
-    //TODO
     var feedData = {
-          prediction: new Date().getTime() + 180 * 60000, //3 hours from now
-          feedStartTime: feedStartTime,
-          feedEndTime: new Date(),
-          totalToday: 0,
-          mealsToday: 0,
-          happy: 5,
+          feedStartTime: feedStartTime.getTime(),
+          feedEndTime: new Date().getTime(),
+          happy: happy,
           totalFeedingTime: totalFeedingTime,
           leftFeedingTime: leftFeedingTime,
           rightFeedingTime: rightFeedingTime,
@@ -100,56 +92,81 @@ export class RepositoryProvider {
     }
 
     this.currentBaby.feedHistory.push(feedData);
-    this.currentBaby.nextEat = feedData;
+    this.currentBaby.nextFeed = feedData;
 
     this.saveToLocalStorage();
 
-    this.updateTodayValues();
+    this.updateCardData();
   }
 
 
 
   saveToLocalStorage(){
-    this.storage.set( 'lact_data', JSON.stringify(this.babiesList));
+    this.storage.set('lact_data', JSON.stringify(this.babiesList));
 
   }
 
   loadFromLocalStorage(){
     this.storage.get('lact_data').then((val) => {
       this.babiesList = JSON.parse(val);
-      if (this.babiesList){
+      if (this.babiesList && this.babiesList.length > 0){
         this.currentBaby = this.babiesList[0];
-        this.updateTodayValues();
+        this.updateCardData();
       } else {
         //TODO
         //Open onboarding
         this.createSampleData();
+        this.updateCardData();
       }
     });
 
 
   }
 
-  updateTodayValues() {
-      //Calculate today values
-      var today = new Date();
-      today.setHours(0, 0, 0, 0);
+  updateCardData() {
 
-      var mealsToday = 0;
+    if (this.currentBaby.feedHistory.length > 0){
+        //Calculate today values
+        var today = new Date();
+        today.setHours(0, 0, 0, 0);
 
-      for (var i=this.currentBaby.feedHistory.length-1;i>=0;i--){
-        var feedDate = new Date(this.currentBaby.feedHistory[i].feedStartTime);
-        feedDate.setHours(0, 0, 0, 0);
-        console.log(today);
-        console.log(feedDate);
-        if (feedDate.getTime() == today.getTime()){
+        var mealsToday = 0;
+
+        for (var i=this.currentBaby.feedHistory.length-1;i>=0;i--){
+          var feedDate = new Date(this.currentBaby.feedHistory[i].feedStartTime);
+          feedDate.setHours(0, 0, 0, 0);
+          console.log(today);
+          console.log(feedDate);
+          if (feedDate.getTime() != today.getTime()){
+            break
+          }
           mealsToday += 1;
-        } else {
-          break;
         }
-      }
 
-      this.currentBaby.nextEat.mealsToday = mealsToday;
+
+        var lastFeed = this.currentBaby.feedHistory[this.currentBaby.feedHistory.length-1];
+
+        this.cardsData.nextFeed.totalToday = 0;
+        this.cardsData.nextFeed.mealsToday = mealsToday;
+        this.cardsData.nextFeed.happy = lastFeed.happy;
+        this.cardsData.nextFeed.lastFeedBreast = lastFeed.lastFeedBreast;
+        this.cardsData.nextFeed.prediction = this.predictFeed();
+    } else {
+        this.cardsData.nextFeed.totalToday = 0;
+        this.cardsData.nextFeed.mealsToday = 0;
+        this.cardsData.nextFeed.happy = 0;
+        this.cardsData.nextFeed.lastFeedBreast = 'i';
+        this.cardsData.nextFeed.prediction = 0;
+    }
+
+
+  }
+
+  predictFeed() {
+    //TODO: Call ML
+    //For now, 3 hours later
+    console.log(this.currentBaby.feedHistory[this.currentBaby.feedHistory.length-1])
+    return this.currentBaby.feedHistory[this.currentBaby.feedHistory.length-1].feedEndTime + 180 * 60000;
   }
 
 }

@@ -15,7 +15,7 @@ import { Observable, Subscription } from 'rxjs/Rx';
 export class HomePage {
   private $counter: Observable<number>;
   private subscription: Subscription;
-  private hoursNextEat: string;
+  private hoursNextFeed: string;
   private hoursNextSleep: string;
   private hoursSleeping: string;
   private daysNextDoctor: string;
@@ -75,20 +75,25 @@ export class HomePage {
     var now = today.getTime();
 
     // Eat
-    millis = this.repository.currentBaby.nextEat.prediction - now;
-    if (millis > 0){
-      hours = Math.floor(millis / 3600000);
-      mins = Math.floor(((millis - (hours * 3600000)) / 60000));
-      minsPad = ("0" + mins).slice(-2)
+    if (this.repository.cardsData.nextFeed.happy > 0){
+      millis = this.repository.cardsData.nextFeed.prediction - now;
+      if (millis > 0){
+        hours = Math.floor(millis / 3600000);
+        mins = Math.floor(((millis - (hours * 3600000)) / 60000));
+        minsPad = ("0" + mins).slice(-2)
+      } else {
+        hours = 0
+        minsPad = "00"
+      }
+      this.hoursNextFeed = hours + "h "+minsPad+"min";
     } else {
-      hours = 0
-      minsPad = "00"
+      //No data
+      this.hoursNextFeed = "??";
     }
-    this.hoursNextEat = hours + "h "+minsPad+"min";
 
 
     // Sleep prediction
-    millis = this.repository.currentBaby.nextSleep.prediction - now;
+    millis = this.repository.cardsData.nextSleep.prediction - now;
     if (millis > 0){
       hours = Math.floor(millis / 3600000);
       mins = Math.floor(((millis - (hours * 3600000)) / 60000));
@@ -100,7 +105,7 @@ export class HomePage {
     this.hoursNextSleep = hours + "h "+minsPad+"min";
 
     // Sleeping
-    millis = now - this.repository.currentBaby.nextSleep.timestamp;
+    millis = now - this.repository.cardsData.nextSleep.timestamp;
     if (millis > 0){
       hours = Math.floor(millis / 3600000);
       mins = Math.floor(((millis - (hours * 3600000)) / 60000));
@@ -114,7 +119,7 @@ export class HomePage {
 
     // Doctor
     var nextDoctor = "0h";
-    var appointment = new Date(this.repository.currentBaby.nextDoctor.timestamp);
+    var appointment = new Date(this.repository.cardsData.nextDoctor.timestamp);
 
     this.dateNextDoctor = appointment.getDate() +
       "/" +("0"+(appointment.getMonth()+1)).slice(-2) +
@@ -122,7 +127,7 @@ export class HomePage {
       + " " + ("0"+appointment.getHours()).slice(-2)
       + ":" + ("0"+appointment.getMinutes()).slice(-2);
 
-    millis = this.repository.currentBaby.nextDoctor.timestamp - now;
+    millis = this.repository.cardsData.nextDoctor.timestamp - now;
     if (millis >0) {
       var days = Math.floor(millis / 86400000);
       if (days > 1){
