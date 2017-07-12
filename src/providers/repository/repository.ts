@@ -21,7 +21,8 @@ export class RepositoryProvider {
           mealsToday: 0,
           happy: 0,
           lastFeedBreast: 'l',
-          comment: ''
+          comment: '',
+          type: 'breast'
         },
         nextSleep: {
           prediction: 0,
@@ -62,7 +63,8 @@ export class RepositoryProvider {
             leftFeedingTime: 3000,
             rightFeedingTime: 5000,
             lastFeedBreast: 'r',
-            comment: ''
+            comment: '',
+            type: 'breast'
           }
         ]
       },
@@ -81,7 +83,7 @@ export class RepositoryProvider {
 
   }
 
-  saveFeedData(feedStartTime, feedEndTime, totalFeedingTime, leftFeedingTime, rightFeedingTime, lastFeedBreast, happy, comment) {
+  saveFeedData(feedStartTime, feedEndTime, totalFeedingTime, leftFeedingTime, rightFeedingTime, lastFeedBreast, happy, comment, type) {
     console.log("saveFeedData");
     var feedData = {
           feedStartTime: feedStartTime.getTime(),
@@ -91,7 +93,8 @@ export class RepositoryProvider {
           leftFeedingTime: leftFeedingTime,
           rightFeedingTime: rightFeedingTime,
           lastFeedBreast: lastFeedBreast,
-          comment: comment
+          comment: comment,
+          type: type
     }
 
     this.currentBaby.feedHistory.push(feedData);

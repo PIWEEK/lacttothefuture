@@ -35,11 +35,15 @@ page-eat {
         margin: 0 auto;
         color: #7544c3;
         .icon_container{
-            width: 25%;
             display: inline-block;
-            margin: 1em;
-            width: 3em;
+            margin: 0.5em 0.5em 0 1em;
+            width: 6em;
+            height: 4em;
             background-color: white;
+            .icon {
+                width: 100%;
+                position:relative;
+            }
         }
         .info_container{
             width: 74%;

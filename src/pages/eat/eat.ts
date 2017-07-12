@@ -45,6 +45,7 @@ export class EatPage {
   private saveDataLastFeedBreast: string;
   private saveDataHapiness:number;
   private comment:string;
+  private lastFeed: any;
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController, public repository: RepositoryProvider, public modalCtrl: ModalController) {
@@ -64,25 +65,23 @@ export class EatPage {
 
     var txt = "";
     if (this.repository.currentBaby.feedHistory && this.repository.currentBaby.feedHistory.length > 0){
-      var lastFeed = this.repository.currentBaby.feedHistory[this.repository.currentBaby.feedHistory.length - 1];
-      console.log("********************");
-      console.log(lastFeed);
-      var millis = new Date().getTime() - lastFeed.feedEndTime;
+      this.lastFeed = this.repository.currentBaby.feedHistory[this.repository.currentBaby.feedHistory.length - 1];
+      var millis = new Date().getTime() - this.lastFeed.feedEndTime;
       var hours = Math.floor(millis / 3600000);
       var mins = Math.floor(((millis - (hours * 3600000)) / 60000));
       var minsPad = ("0" + mins).slice(-2)
 
       txt = "Hace " + hours + "h " + minsPad + " min - ";
 
-      if (lastFeed.lastFeedBreast == 'l') {
+      if (this.lastFeed.lastFeedBreast == 'l') {
         txt += "acabaste en pecho izquierdo";
-      } else if (lastFeed.lastFeedBreast == 'r') {
+      } else if (this.lastFeed.lastFeedBreast == 'r') {
         txt += "acabaste en pecho derecho";
-      } else if (lastFeed.lastFeedBreast == 'b') {
+      } else if (this.lastFeed.lastFeedBreast == 'b') {
         txt += "ambos pechos";
-      } else if (lastFeed.lastFeedBreast == 'o') {
+      } else if (this.lastFeed.lastFeedBreast == 'o') {
         txt += "biberón";
-      } else if (lastFeed.lastFeedBreast == 's') {
+      } else if (this.lastFeed.lastFeedBreast == 's') {
         txt += "comida";
       }
     }
@@ -246,7 +245,7 @@ export class EatPage {
 
   saveAndExit(){
     this.repository.saveFeedData(this.saveDataFeedStartTime, this.saveDataFeedEndTime, this.saveDataTotalFeedingTime, this.saveDataLeftFeedingTime,
-                                this.saveDataRightFeedingTime, this.saveDataLastFeedBreast, this.saveDataHapiness, this.comment);
+                                this.saveDataRightFeedingTime, this.saveDataLastFeedBreast, this.saveDataHapiness, this.comment, this.currentFeedMethod);
     this.confirmedExit = true;
     this.navCtrl.pop();
   }
