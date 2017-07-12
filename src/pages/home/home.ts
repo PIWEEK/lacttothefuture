@@ -20,6 +20,8 @@ export class HomePage {
   private hoursSleeping: string;
   private daysNextDoctor: string;
   private dateNextDoctor: string;
+  private lastFeedIcon: string;
+  private lastFeedText: string;
 
 
 
@@ -49,6 +51,7 @@ export class HomePage {
     //console.log('ionViewDidEnter Home');
     //this.repository.loadFromLocalStorage()
     //this.updateInfo();
+
   }
 
 
@@ -86,6 +89,27 @@ export class HomePage {
         minsPad = "00"
       }
       this.hoursNextFeed = hours + "h "+minsPad+"min";
+
+      this.lastFeedIcon = "";
+      this.lastFeedText = '??';
+
+      if (this.repository.currentBaby.feedHistory && this.repository.currentBaby.feedHistory.length > 0){
+        var lastFeed = this.repository.currentBaby.feedHistory[this.repository.currentBaby.feedHistory.length - 1];
+        if (lastFeed.type == 'breast') {
+          if (lastFeed.lastFeedBreast == 'l') {
+            this.lastFeedIcon = 'left_breast';
+            this.lastFeedText = 'PECHO IZQUIERDO';
+          } else if (lastFeed.lastFeedBreast == 'r') {
+            this.lastFeedIcon = 'right_breast';
+            this.lastFeedText = 'PECHO DERECHO';
+          } else {
+            this.lastFeedIcon = 'both_breast'
+            this.lastFeedText = 'AMBOS PECHOS';
+          }
+        }
+      }
+
+
     } else {
       //No data
       this.hoursNextFeed = "??";

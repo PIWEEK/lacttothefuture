@@ -14,11 +14,11 @@
       <div class="card-title">Tendrá hambre en</div>
       <div class="card-subtitle">
         <div>
-          <img src="assets/img/eat.png" class="icon"/>
+          <img [src]="'assets/img/' + lastFeedIcon + '.png'" class="icon"/>
           <div class="card-info">
             <div>
               <ion-chip>
-                <ion-label>PECHO DERECHO</ion-label>
+                <ion-label>{{ lastFeedText }}</ion-label>
               </ion-chip>
             </div>
             <div>
