@@ -1,6 +1,5 @@
-let MLR = require('ml-regression-multivariate-linear');
-let fs = require("fs");
-let _ = require("lodash");
+import MLR from 'ml-regression-multivariate-linear';
+import _ from "lodash";
 
 function formatData(row) {
     return [
@@ -29,29 +28,28 @@ function getLearningCurve(input, output) {
   return new MLR(input, output);
 }
 
-function getCurve() {
+function getCurve(data) {
   // TODO: Not to always take all the available registers (i.e. just the last N regs)
-  data = transformOneData(JSON.parse(fs.readFileSync('sleepData.json', 'utf8')));
 
-  input = _.map(data, (row) => row.slice(0, row.length-1));
-  output = _.map(data, (row) => row.slice(row.length-1, row.length));
+  let input = _.map(data, (row) => row.slice(0, row.length-1));
+  let output = _.map(data, (row) => row.slice(row.length-1, row.length));
 
   const curve = getLearningCurve(input, output);
 
   return curve;
 }
 
-function predict(knownData) {
-  const mlr = getCurve();
-  let prediction = mlr.predict(knownData);
+export function predict(historicalData) {
+  const mlr = getCurve(historicalData);
+  let prediction = mlr.predict(_.last(historicalData));
 
   return prediction;
 }
 
-// Last known sleeping register
-let lastSleepData = [60, 45, 0, 0, 1];
-
-// Get the prediction for the baby to be awake, given all the previous sleeping registers,
-// stored in sleepData.json file
-let awakePrediction = Math.round(predict(lastSleepData))
-console.log("Your baby will be awake for " + awakePrediction + " minutes");
+// // Last known sleeping register
+// let lastSleepData = [60, 45, 0, 0, 1];
+//
+// // Get the prediction for the baby to be awake, given all the previous sleeping registers,
+// // stored in sleepData.json file
+// let awakePrediction = Math.round(predict(lastSleepData))
+// console.log("Your baby will be awake for " + awakePrediction + " minutes");

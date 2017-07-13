@@ -13,7 +13,7 @@ import { RepositoryProvider } from "../../providers/repository/repository";
 import { Observable, Subscription } from 'rxjs/Rx';
 
 // import * as mlr from "ml-regression-multivariate-linear"
-import * as sample from '../../app/utils/sample.js' ;
+import * as sample from '../../utils/sample' ;
 
 
 
