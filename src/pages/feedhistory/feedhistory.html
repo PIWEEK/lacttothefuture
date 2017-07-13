@@ -17,32 +17,32 @@
       <ion-item>
         <ion-avatar item-start>
           <img [src]="'assets/img/' + selectFeedIcon(entry) + '.png'" class="icon"/>
-        </ion-avatar>        
+        </ion-avatar>
         <div>
           <ion-grid>
               <ion-row>
                 <ion-col col-7>
                     <div class="infoSection">
-                      <div class="happy_container">
-                        <img [src]="'assets/img/happyc' + entry.happy+ '.png'" class="happy"/>
-                      </div>
                       <div>Fin alimentación</div>
                       <div class="date"><ion-icon name="clock"></ion-icon> {{ entry.feedEndTime | date: 'dd/MM/yyyy HH:mm' }}</div>
                       <div>Comienzo alimentación</div>
                       <div class="date"><ion-icon name="clock"></ion-icon> {{ entry.feedStartTime | date: 'dd/MM/yyyy HH:mm' }}</div>
                     </div>
+                    <div class="happy_container">
+                      <img [src]="'assets/img/happyc' + entry.happy+ '.png'" class="happy"/>
+                    </div>
                 </ion-col>
-              
+
                 <ion-col col-5>
                   <div class="iconSection">
                     <div class="iconContainer" *ngIf="entry.type == 'breast'">
-                      <img src="assets/img/left_breast_b.png" class="icon"/>
-                      <div class="breast">Izquierdo</div>
+                      <div class="breast">Pecho</div>
+                      <div class="breast">izquierdo</div>
                       <div class="time">{{ calcMinutes(entry.leftFeedingTime) }}</div>
                     </div>
                     <div class="iconContainer" *ngIf="entry.type == 'breast'">
-                      <img src="assets/img/left_breast_b.png" class="icon"/>
-                      <div class="breast">Derecho</div>
+                      <div class="breast">Pecho</div>
+                      <div class="breast">derecho</div>
                       <div class="time">{{ calcMinutes(entry.rightFeedingTime) }}</div>
                     </div>
                     <div class="iconContainer" *ngIf="entry.type == 'bottle'">
@@ -68,16 +68,16 @@
 
 
 
-          
 
 
-          
-          
+
+
+
         </div>
         <div class="comment" *ngIf="entry.comment">
           {{ entry.comment }}
         </div>
-      </ion-item>      
+      </ion-item>
       <ion-item-options side="right">
         <button ion-button color="primary">
           <ion-icon name="brush"></ion-icon>

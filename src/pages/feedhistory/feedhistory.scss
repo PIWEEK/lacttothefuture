@@ -23,21 +23,33 @@ page-feedhistory {
     }
 
     .content {
-        background: linear-gradient(#23b2ff, #38d6c8);
         text-align: center;
+    }
+
+    .item {
+        margin: .6em 0;
+    }
+
+    .item-block {
+      align-items: flex-start;
     }
 
     ion-avatar {
         .icon {
-            border-radius: 10%;            
-            width: 4em;
-            background-color: #23b2ff;
+          background: linear-gradient(to right top, #38d6c8 0%,#05a8ff 30%,#7ed2ff 100%);
+          box-shadow: 0px 7px 17px 0px rgba(60, 50, 101, 0.33);
+          border-radius: 5px;
+          padding: .9em .2em;
+          height: 4em;
+          width: 4em;
+          margin-top: 1em;
         }
     }
 
     .date {
         font-weight: bold;
         color: darkgray;
+        margin: .4em;
     }
 
 
@@ -48,6 +60,7 @@ page-feedhistory {
 
     .happy_container {
         text-align: left;
+        margin-top: .5em;
     }
 
     .happy {
@@ -60,15 +73,18 @@ page-feedhistory {
         width: 100%;
     }
     .iconSection {
-        display: inline-block;
+        display: flex;
         text-align: center;
         width: 100%;
         .iconContainer {
-            display: inline-block;
-            width: 3em;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 .27em;
             height: 4em;
-            border: 1px solid blue;
-            border-radius: 10%;     
+            border: 1px solid #d7e0dd;
+            border-radius: 5px;
+            margin-right: .5em;
             .icon {
                 width: 2.5em;
                 margin: 0.5em 0 0 0;

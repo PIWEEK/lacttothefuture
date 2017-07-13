@@ -26,6 +26,10 @@ page-doctorhistory {
         text-align: center;
     }
 
+    .item {
+        margin: .6em 0;
+    }
+
     ion-avatar {
         .icon {
           background: linear-gradient(to right top, #38d6c8 0%,#42c297 30%,#c2e99e 100%);
