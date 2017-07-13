@@ -23,15 +23,17 @@ page-doctorhistory {
     }
 
     .content {
-        background: linear-gradient(#38d6c8, #c2e99e);
         text-align: center;
     }
 
     ion-avatar {
         .icon {
-            border-radius: 10%;
-            background-color: #c2e99e;
-            width: 4em;
+          background: linear-gradient(to right top, #38d6c8 0%,#42c297 30%,#c2e99e 100%);
+          box-shadow: 0px 5px 12px 0px rgba(60, 50, 101, 0.33);
+          border-radius: 5px;
+          padding: .9em .2em;
+          height: 4em;
+          width: 4em;
 
         }
     }
@@ -45,6 +47,7 @@ page-doctorhistory {
     .comment {
         word-wrap: break-word;
         white-space: pre-wrap;
+        margin-top: .5em;
     }
 
 }
