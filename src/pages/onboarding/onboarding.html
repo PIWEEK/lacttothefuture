@@ -3,13 +3,13 @@
     <div class="onb-title">Demos la bienvenida a ...</div>
 
     <div class="onb-gender">
-      <div class="onb-gender-item girl selected">
+      <div [ngClass]="{'onb-gender-item': true, 'girl': true, 'selected': sex == 'girl'}" (click)="setSex('girl')">
         <div class="onb-gender-icon">
           <img src="assets/img/onb-girl.png"/>
         </div>
         <div class="onb-gender-title">Niña</div>
       </div>
-      <div class="onb-gender-item boy">
+      <div [ngClass]="{'onb-gender-item': true, 'boy': true, 'selected': sex == 'boy'}" (click)="setSex('boy')">
         <div class="onb-gender-icon">
           <img src="assets/img/onb-boy.png"/>
         </div>
@@ -17,15 +17,19 @@
       </div>
     </div>
 
-    <div>
-      <ion-input placeholder="Nombre del bebé" [(ngModel)]="comment"></ion-input>
+    <div>          
+        <ion-input placeholder="Nombre del bebé" [(ngModel)]="name"></ion-input>          
+    </div>
+    
+
+    
+    <div class="birthDayContainer">      
+      <ion-item>
+        <ion-label>Cumpleaños del bebé</ion-label>
+        <ion-datetime displayFormat="DD/MM/YYYY" pickerFormat="DD MMMM YYYY" [(ngModel)]="birthDateISOString"></ion-datetime>
+      </ion-item>
     </div>
 
-    <!-- esto deberá ser un input de fecha -->
-    <div>
-      <ion-input placeholder="Cumpleaños del bebé" [(ngModel)]="comment"></ion-input>
-    </div>
-
-    <button ion-button outline round>Empezar</button>
+    <button ion-button outline round (click)="saveData()">Empezar</button>
 
 </ion-content>

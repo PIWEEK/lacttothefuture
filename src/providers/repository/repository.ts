@@ -169,6 +169,24 @@ export class RepositoryProvider {
     this.updateCardData();
   }
 
+  addBaby(name, sex, birthDate){
+    this.currentBaby = {
+        name: name,
+        sex: sex,
+        birthDate: birthDate,
+        feedHistory: [],
+        sleepHistory: [],
+        doctorHistory: []
+      }
+    if (! this.babiesList) {
+      this.babiesList = [];
+    }
+    console.log(this.babiesList);
+    this.babiesList.push(this.currentBaby);
+    this.saveToLocalStorage();
+    this.updateCardData();
+  }
+
 
 
   saveToLocalStorage(){
@@ -193,10 +211,11 @@ export class RepositoryProvider {
 
         this.updateCardData();
       } else {
+        this.babiesList = [];
         //TODO
         //Open onboarding
-        this.createSampleData();
-        this.updateCardData();
+        //this.createSampleData();
+        //this.updateCardData();
       }
     });
 

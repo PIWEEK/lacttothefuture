@@ -6,6 +6,8 @@ import { DoctorPage} from "../doctor/doctor"
 import { FeedhistoryPage} from "../feedhistory/feedhistory"
 import { SleephistoryPage} from "../sleephistory/sleephistory"
 import { DoctorhistoryPage} from "../doctorhistory/doctorhistory"
+import { OnboardingPage} from "../onboarding/onboarding"
+
 
 import { RepositoryProvider } from "../../providers/repository/repository";
 import { Observable, Subscription } from 'rxjs/Rx';
@@ -55,6 +57,9 @@ export class HomePage {
     //console.log('ionViewDidEnter Home');
     //this.repository.loadFromLocalStorage()
     //this.updateInfo();
+    if (!this.repository.currentBaby.name) {
+      this.navCtrl.push(OnboardingPage, {})
+    }
 
   }
 
