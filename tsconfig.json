@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "allowJs": true,
+//    "outDir": "./built",
     "allowSyntheticDefaultImports": true,
     "declaration": false,
     "emitDecoratorMetadata": true,

@@ -12,6 +12,10 @@ import { OnboardingPage} from "../onboarding/onboarding"
 import { RepositoryProvider } from "../../providers/repository/repository";
 import { Observable, Subscription } from 'rxjs/Rx';
 
+// import * as mlr from "ml-regression-multivariate-linear"
+import * as sample from '../../app/utils/sample.js' ;
+
+
 
 @Component({
   selector: 'page-home',
@@ -39,6 +43,9 @@ export class HomePage {
 
   ngOnInit() {
     console.log('ngOnInit');
+    // alert("HELLO");
+    sample.sayHello();
+    // this.mlr = mlr.
     this.updateInfo();
       //every second
       this.$counter = Observable.interval(1000).map((x) => {
