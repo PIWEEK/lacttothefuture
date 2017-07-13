@@ -1,18 +1,93 @@
-<!--
-  Generated template for the FeedhistoryPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>feedhistory</ion-title>
+    <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Historial de alimentación</ion-title>
+
   </ion-navbar>
+
 
 </ion-header>
 
+<ion-content>
+  <ion-list>
+    <ion-item-sliding *ngFor="let entry of repository.currentBaby.feedHistory">
+      <ion-item>
+        <ion-avatar item-start>
+          <img [src]="'assets/img/' + selectFeedIcon(entry) + '.png'" class="icon"/>
+        </ion-avatar>        
+        <div>
+          <ion-grid>
+              <ion-row>
+                <ion-col col-7>
+                    <div class="infoSection">
+                      <div class="happy_container">
+                        <img [src]="'assets/img/happyc' + entry.happy+ '.png'" class="happy"/>
+                      </div>
+                      <div>Fin alimentación</div>
+                      <div class="date"><ion-icon name="clock"></ion-icon> {{ entry.feedEndTime | date: 'dd/MM/yyyy HH:mm' }}</div>
+                      <div>Comienzo alimentación</div>
+                      <div class="date"><ion-icon name="clock"></ion-icon> {{ entry.feedStartTime | date: 'dd/MM/yyyy HH:mm' }}</div>
+                    </div>
+                </ion-col>
+              
+                <ion-col col-5>
+                  <div class="iconSection">
+                    <div class="iconContainer" *ngIf="entry.type == 'breast'">
+                      <img src="assets/img/left_breast_b.png" class="icon"/>
+                      <div class="breast">Izquierdo</div>
+                      <div class="time">{{ calcMinutes(entry.leftFeedingTime) }}</div>
+                    </div>
+                    <div class="iconContainer" *ngIf="entry.type == 'breast'">
+                      <img src="assets/img/left_breast_b.png" class="icon"/>
+                      <div class="breast">Derecho</div>
+                      <div class="time">{{ calcMinutes(entry.rightFeedingTime) }}</div>
+                    </div>
+                    <div class="iconContainer" *ngIf="entry.type == 'bottle'">
+                      <img src="assets/img/eat_bottle_b.png" class="icon"/>
+                      <div class="breast">
+                        {{ (entry.bottleType=='formula')?'Fórmula':((entry.bottleType=='mother')?'Extraída':'Agua') }}
+                      </div>
+                      <div class="time">{{ entry.quantity }}ml</div>
+                    </div>
+                    <div class="iconContainer" *ngIf="entry.type == 'solid'">
+                      <img src="assets/img/eat_solid_b.png" class="icon"/>
+                      <div class="breast">
+                        {{ entry.solidName }}
+                      </div>
+                      <div class="time">{{ entry.quantity }}gr</div>
+                    </div>
+                  </div>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
 
-<ion-content padding>
 
+
+
+
+          
+
+
+          
+          
+        </div>
+        <div class="comment" *ngIf="entry.comment">
+          {{ entry.comment }}
+        </div>
+      </ion-item>      
+      <ion-item-options side="right">
+        <button ion-button color="primary">
+          <ion-icon name="brush"></ion-icon>
+          Modificar
+        </button>
+        <button ion-button color="secondary">
+          <ion-icon name="trash"></ion-icon>
+          Borrar
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
 </ion-content>

@@ -1,3 +1,92 @@
 page-feedhistory {
+    &.ion-page {
+        font-family: 'ralewayregular', sans-serif;
+    }
+    .bar-button,
+    .bar-buttons {
+        color: #aec6d5;
+        position: absolute;
+    }
+    .bar-buttons {
+        right: 3.2em;
+        top: 1.2em;
+    }
+    .back-button {
+        z-index: 1000;
+    }
+    .toolbar-title {
+        font-family: 'ralewaybold', sans-serif;
+        color: #aec6d5;
+        width: 100%;
+        text-align: center;
+        font-size: 1.6em;
+    }
+
+    .content {
+        background: linear-gradient(#23b2ff, #38d6c8);
+        text-align: center;
+    }
+
+    ion-avatar {
+        .icon {
+            border-radius: 10%;            
+            width: 4em;
+            background-color: #23b2ff;
+        }
+    }
+
+    .date {
+        font-weight: bold;
+        color: darkgray;
+    }
+
+
+    .comment {
+        word-wrap: break-word;
+        white-space: pre-wrap;
+    }
+
+    .happy_container {
+        text-align: left;
+    }
+
+    .happy {
+        width: 2em;
+    }
+
+    .infoSection {
+        display: inline-block;
+        font-size: 0.8em;
+        width: 100%;
+    }
+    .iconSection {
+        display: inline-block;
+        text-align: center;
+        width: 100%;
+        .iconContainer {
+            display: inline-block;
+            width: 3em;
+            height: 4em;
+            border: 1px solid blue;
+            border-radius: 10%;     
+            .icon {
+                width: 2.5em;
+                margin: 0.5em 0 0 0;
+            }
+            .breast {
+                font-size: 0.6em;
+                color:#7b4cc5;
+                text-overflow: ellipsis;
+                width: 100%;
+                overflow: hidden;
+            }
+            .time {
+                font-size: 0.6em;
+                color:#6c98b3;
+            }
+        }
+    }
+
+
 
 }
