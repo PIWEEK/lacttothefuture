@@ -27,7 +27,7 @@ page-doctor {
         margin: 1em 0;
         .icon {
             margin: 0 auto;
-            width: 12em;
+            width: 8em;
         }
     }
 
@@ -36,6 +36,32 @@ page-doctor {
         text-align: center;
     }
 
-
+    .info {
+        background-color: #c6ece9;
+        width: 90%;
+        height: 6em;
+        padding: 0.5em;
+        margin: 0 auto;
+        color: #38d6c8;
+        .icon_container{
+            display: inline-block;
+            margin: 0.5em 0.5em 0 1em;
+            width: 6em;
+            height: 4em;
+            background-color: white;
+            .icon {
+                width: 100%;
+                position:relative;
+            }
+        }
+        .info_container {
+            font-family: 'ralewaybold', sans-serif;
+            display: inline-block;
+            width: 100%;
+            .title {
+                font-weight: bold;
+            }
+        }
+    }
 
 }

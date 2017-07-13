@@ -21,6 +21,17 @@
     <img [src]="repository.currentBaby.sex=='boy'?(repository.cardsData.nextSleep.status == 'SLEEPING'?'assets/img/boy_sleep.png':'assets/img/boy_awake.png'):(repository.cardsData.nextSleep.status == 'SLEEPING'?'assets/img/girl_sleep.png':'assets/img/girl_awake.png')" class="icon"/>
   </div>
 
+  <ion-chip class="info" *ngIf="repository.cardsData.nextFeed.happy > 0">
+    <div class="info_container">
+      <div class="title">
+        SIESTA ANTERIOR
+      </div>
+      <div>
+        {{ previousFeedText }}
+      </div>
+    </div>
+  </ion-chip>
+
   <div class="sleep_form">
     <ion-item>
       <ion-label><span *ngIf="repository.cardsData.nextSleep.status == 'SLEEPING'">¿Cuándo se ha despertado?</span><span *ngIf="repository.cardsData.nextSleep.status != 'SLEEPING'">¿Cuándo se ha dormido?</span></ion-label>

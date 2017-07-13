@@ -21,6 +21,17 @@
     <img src="assets/img/doctor.png" class="icon"/>
   </div>
 
+  <ion-chip class="info" *ngIf="repository.cardsData.nextFeed.happy > 0">
+    <div class="info_container">
+      <div class="title">
+        CITA MÉDICA ANTERIOR
+      </div>
+      <div>
+        {{ previousFeedText }}
+      </div>
+    </div>
+  </ion-chip>
+
   <div class="doctor_form">
     <ion-item>
       <ion-label>Cuándo</ion-label>
