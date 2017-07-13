@@ -20,7 +20,10 @@ function calcError(regression, features, labels) {
     _.each(features, (feature, idx) => {
         var prediction = regression.predict(feature);
         var realValue = labels[idx];
-        error = error + Math.abs(prediction - realValue);
+        // Minimum mean square error
+        error = error + Math.abs(Math.pow(prediction - realValue, 2));
+        // Simple error approach, using direct differences
+        // error = error + Math.abs(prediction - realValue));
         total = total + 1;
     })
     return error/total;
