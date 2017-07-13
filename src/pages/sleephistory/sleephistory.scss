@@ -1,3 +1,63 @@
 page-sleephistory {
+    &.ion-page {
+        font-family: 'ralewayregular', sans-serif;
+    }
+    .bar-button,
+    .bar-buttons {
+        color: #aec6d5;
+        position: absolute;
+    }
+    .bar-buttons {
+        right: 3.2em;
+        top: 1.2em;
+    }
+    .back-button {
+        z-index: 1000;
+    }
+    .toolbar-title {
+        font-family: 'ralewaybold', sans-serif;
+        color: #aec6d5;
+        width: 100%;
+        text-align: center;
+        font-size: 1.6em;
+    }
 
+    .content {
+        background: linear-gradient(to left bottom, #a3e42a 0%,#f0b014 30%,#f97dc8 100%);
+        text-align: center;
+    }
+
+    ion-avatar {
+        .icon {
+            border-radius: 10%;            
+            width: 4em;
+
+            &.awake {
+                background-color: #f0b014;
+            }
+            &.sleep {
+                background-color: #bda5e2;
+            }
+
+        }
+    }
+
+    .date {
+        font-weight: bold;
+        color: darkgray;
+    }
+
+
+    .comment {
+        word-wrap: break-word;
+        white-space: pre-wrap;
+    }
+
+    .happy_container {
+        text-align: center;
+    }
+
+    .happy {
+        width: 2em;
+    }
 }

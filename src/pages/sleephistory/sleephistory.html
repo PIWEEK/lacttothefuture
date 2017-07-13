@@ -1,18 +1,53 @@
-<!--
-  Generated template for the SleephistoryPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>sleephistory</ion-title>
+    <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Historial de sueño</ion-title>
+
   </ion-navbar>
+
 
 </ion-header>
 
-
-<ion-content padding>
-
+<ion-content>
+  <ion-list>
+    <ion-item-sliding *ngFor="let entry of repository.currentBaby.sleepHistory">
+      <ion-item>
+        <ion-avatar item-start>
+          <img [src]="repository.currentBaby.sex=='boy'?(entry.status == 'SLEEPING'?'assets/img/boy_sleep.png':'assets/img/boy_awake.png'):(entry.status == 'SLEEPING'?'assets/img/girl_sleep.png':'assets/img/girl_awake.png')" class="icon" [ngClass]="{'sleep': entry.status == 'SLEEPING', 'awake': entry.status != 'SLEEPING'}"/>
+        </ion-avatar>
+        <div>
+          <ion-grid>
+            <ion-row>
+              <ion-col col-12 class="date">
+                <span *ngIf="entry.status != 'SLEEPING'">Se despierta</span>
+                <span *ngIf="entry.status == 'SLEEPING'">Se duerme</span>
+              </ion-col>
+            </ion-row>
+              <ion-row>                
+                <ion-col col-10 class="date"><ion-icon name="clock"></ion-icon> {{ entry.timestamp | date: 'dd/MM/yyyy HH:mm' }}</ion-col>
+                <ion-col col-2 class="happy_container">
+                  <img [src]="'assets/img/happyc' + entry.happy+ '.png'" class="happy"/>
+                </ion-col>
+              </ion-row>
+              <ion-row *ngIf="entry.comment">
+                <ion-col col-12 class="comment">{{entry.comment}}</ion-col>
+              </ion-row>
+            </ion-grid>
+        </div>
+      </ion-item>      
+      <ion-item-options side="right">
+        <button ion-button color="primary">
+          <ion-icon name="brush"></ion-icon>
+          Modificar
+        </button>
+        <button ion-button color="secondary">
+          <ion-icon name="trash"></ion-icon>
+          Borrar
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
 </ion-content>
