@@ -23,20 +23,22 @@ page-sleephistory {
     }
 
     .content {
-        background: linear-gradient(to left bottom, #a3e42a 0%,#f0b014 30%,#f97dc8 100%);
         text-align: center;
     }
 
     ion-avatar {
         .icon {
-            border-radius: 10%;            
+            box-shadow: 0px 7px 17px 0px rgba(60, 50, 101, 0.33);
+            border-radius: 5px;
+            padding: .9em .2em;
+            height: 4em;
             width: 4em;
 
             &.awake {
-                background-color: #f0b014;
+                background: linear-gradient(to right top, #a3e42a 0%,#f0b014 30%,#f97dc8 100%);
             }
             &.sleep {
-                background-color: #bda5e2;
+                background: linear-gradient(to right top, #38d6c8 0%,#7442c2 30%,#bda5e2 100%);
             }
 
         }

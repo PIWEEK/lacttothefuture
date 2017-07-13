@@ -34,16 +34,16 @@ page-home {
             width: 100%;
 
             &.eat {
-                background: linear-gradient(to left bottom, #38d6c8 0%,#05a8ff 30%,#7ed2ff 100%);
+                background: linear-gradient(to right top, #38d6c8 0%,#05a8ff 30%,#7ed2ff 100%);
             }
             &.sleep {
-                background: linear-gradient(to left bottom, #38d6c8 0%,#7442c2 30%,#bda5e2 100%);
+                background: linear-gradient(to right top, #38d6c8 0%,#7442c2 30%,#bda5e2 100%);
             }
             &.awake {
-                background: linear-gradient(to left bottom, #a3e42a 0%,#f0b014 30%,#f97dc8 100%);
+                background: linear-gradient(to right top, #a3e42a 0%,#f0b014 30%,#f97dc8 100%);
             }
             &.doctor {
-                background: linear-gradient(to left bottom, #38d6c8 0%,#42c297 30%,#c2e99e 100%);
+                background: linear-gradient(to right top, #38d6c8 0%,#42c297 30%,#c2e99e 100%);
             }
         }
 
