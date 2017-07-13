@@ -1,18 +1,31 @@
-<!--
-  Generated template for the OnboardingPage page.
+<ion-content>
 
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
-<ion-header>
+    <div class="onb-title">Demos la bienvenida a ...</div>
 
-  <ion-navbar>
-    <ion-title>onboarding</ion-title>
-  </ion-navbar>
+    <div class="onb-gender">
+      <div class="onb-gender-item girl selected">
+        <div class="onb-gender-icon">
+          <img src="assets/img/onb-girl.png"/>
+        </div>
+        <div class="onb-gender-title">Niña</div>
+      </div>
+      <div class="onb-gender-item boy">
+        <div class="onb-gender-icon">
+          <img src="assets/img/onb-boy.png"/>
+        </div>
+        <div class="onb-gender-title">Niño</div>
+      </div>
+    </div>
 
-</ion-header>
+    <div>
+      <ion-input placeholder="Nombre del bebé" [(ngModel)]="comment"></ion-input>
+    </div>
 
+    <!-- esto deberá ser un input de fecha -->
+    <div>
+      <ion-input placeholder="Cumpleaños del bebé" [(ngModel)]="comment"></ion-input>
+    </div>
 
-<ion-content padding>
+    <button ion-button outline round>Empezar</button>
 
 </ion-content>
