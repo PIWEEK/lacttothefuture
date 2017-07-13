@@ -21,13 +21,13 @@
     <img [src]="repository.currentBaby.sex=='boy'?(repository.cardsData.nextSleep.status == 'SLEEPING'?'assets/img/boy_sleep.png':'assets/img/boy_awake.png'):(repository.cardsData.nextSleep.status == 'SLEEPING'?'assets/img/girl_sleep.png':'assets/img/girl_awake.png')" class="icon"/>
   </div>
 
-  <ion-chip class="info" *ngIf="repository.cardsData.nextFeed.happy > 0">
+  <ion-chip class="info" *ngIf="repository.cardsData.nextSleep.happy > 0">
     <div class="info_container">
       <div class="title">
-        SIESTA ANTERIOR
+        <span *ngIf="repository.cardsData.nextSleep.status == 'SLEEPING'">DORMIDO DESDE HACE</span><span *ngIf="repository.cardsData.nextSleep.status != 'SLEEPING'">DESPIERTO DESDE HACE</span>
       </div>
       <div>
-        {{ previousFeedText }}
+        {{ previousSleepText }}
       </div>
     </div>
   </ion-chip>

@@ -36,13 +36,20 @@ page-doctor {
         text-align: center;
     }
 
+    .doctor_form {
+        width: 90%;
+        margin: 0 auto;
+    }
+
     .info {
         background-color: #c6ece9;
         width: 90%;
         height: 6em;
         padding: 0.5em;
-        margin: 0 auto;
-        color: #38d6c8;
+        margin: 1em auto;
+        color: #7544c3;
+        text-overflow: ellipsis;        
+        overflow: hidden;
         .icon_container{
             display: inline-block;
             margin: 0.5em 0.5em 0 1em;

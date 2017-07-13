@@ -41,13 +41,20 @@ page-sleep {
         text-align: center;
     }
 
+    .sleep_form {
+        width: 90%;
+        margin: 0 auto;
+    }
+
     .info {
         background-color: #e2d9f1;
         width: 90%;
         height: 6em;
         padding: 0.5em;
-        margin: 0 auto;
+        margin: 1em auto;
         color: #7442c2;
+        text-overflow: ellipsis;        
+        overflow: hidden;
         .icon_container{
             display: inline-block;
             margin: 0.5em 0.5em 0 1em;

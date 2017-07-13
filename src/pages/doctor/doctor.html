@@ -21,13 +21,14 @@
     <img src="assets/img/doctor.png" class="icon"/>
   </div>
 
-  <ion-chip class="info" *ngIf="repository.cardsData.nextFeed.happy > 0">
+  <ion-chip class="info" *ngIf="repository.cardsData.nextDoctor.timestamp > 0">
     <div class="info_container">
       <div class="title">
-        CITA MÉDICA ANTERIOR
+        PRÓXIMA CITA MÉDICA
       </div>
       <div>
-        {{ previousFeedText }}
+        {{ repository.cardsData.nextDoctor.timestamp | date: 'dd/MM/yyyy HH:mm' }}        
+        &nbsp;{{ repository.cardsData.nextDoctor.comment }}
       </div>
     </div>
   </ion-chip>

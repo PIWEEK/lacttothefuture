@@ -48,6 +48,8 @@ page-eat {
         padding: 0.5em;
         margin: 0 auto;
         color: #7544c3;
+        text-overflow: ellipsis;        
+        overflow: hidden;
         .icon_container{
             display: inline-block;
             margin: 0.5em 0.5em 0 1em;

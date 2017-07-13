@@ -14,10 +14,26 @@ export class SleepPage {
   private comments: string;
   private confirmedExit: boolean;
   private happiness: number;
+  private previousSleepText: string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController, private repository: RepositoryProvider, private modalCtrl: ModalController) {
     this.confirmedExit = false;
     this.sleepTimeISOString = new Date().toISOString();
+
+
+    var txt = "";
+    if (this.repository.cardsData.nextSleep.happy > 0){
+      var millis = new Date().getTime() - this.repository.cardsData.nextSleep.timestamp;
+      var hours = Math.floor(millis / 3600000);
+      var mins = Math.floor(((millis - (hours * 3600000)) / 60000));
+      var minsPad = ("0" + mins).slice(-2)
+
+      txt = hours + "h " + minsPad + " min";
+    }
+
+    this.previousSleepText = txt;
+
+
   }
 
   ionViewDidLoad() {
