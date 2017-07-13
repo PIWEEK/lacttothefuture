@@ -1,0 +1,36 @@
+<ion-header>
+
+    <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Citas médicas</ion-title>
+
+  </ion-navbar>
+
+
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item-sliding *ngFor="let appointment of repository.currentBaby.doctorHistory">
+      <ion-item>
+        <ion-avatar item-start>
+          <img src="assets/img/doctor.png" class="icon">
+        </ion-avatar>
+        <div class="date">{{ appointment.timestamp | date: 'dd/MM/yyyy HH:mm' }}</div>
+        <div class="comment">{{appointment.comment}}</div>
+      </ion-item>      
+      <ion-item-options side="right">
+        <button ion-button color="primary">
+          <ion-icon name="brush"></ion-icon>
+          Modificar
+        </button>
+        <button ion-button color="secondary">
+          <ion-icon name="trash"></ion-icon>
+          Borrar
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>

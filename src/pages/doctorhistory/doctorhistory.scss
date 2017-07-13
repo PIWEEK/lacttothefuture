@@ -1,4 +1,4 @@
-page-doctor {
+page-doctorhistory {
     &.ion-page {
         font-family: 'ralewayregular', sans-serif;
     }
@@ -22,20 +22,29 @@ page-doctor {
         font-size: 1.6em;
     }
 
-    .doctor_title {
-        text-align: center;
-        margin: 1em 0;
-        .icon {
-            margin: 0 auto;
-            width: 12em;
-        }
-    }
-
     .content {
         background: linear-gradient(#38d6c8, #c2e99e);
         text-align: center;
     }
 
+    ion-avatar {
+        .icon {
+            border-radius: 10%;
+            background-color: #c2e99e;
+            width: 4em;
 
+        }
+    }
+
+    .date {
+        font-weight: bold;
+        color: darkgray;
+    }
+
+
+    .comment {
+        word-wrap: break-word;
+        white-space: pre-wrap;
+    }
 
 }

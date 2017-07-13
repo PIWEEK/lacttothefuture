@@ -132,11 +132,9 @@ export class RepositoryProvider {
     }
 
     var i =0;
-    if (this.currentBaby.doctorHistory.length > 0){
-      while (this.currentBaby.doctorHistory[i] < doctorData.timestamp){
-        i+=1;
-      }
-    }
+    while ((i<this.currentBaby.doctorHistory.length) && (this.currentBaby.doctorHistory[i].timestamp < doctorData.timestamp)){
+      i+=1;
+    }    
 
 
     this.currentBaby.doctorHistory.splice(i, 0, doctorData);

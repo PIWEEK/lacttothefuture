@@ -3,6 +3,9 @@ import { NavController } from 'ionic-angular';
 import { EatPage} from "../eat/eat"
 import { SleepPage} from "../sleep/sleep"
 import { DoctorPage} from "../doctor/doctor"
+import { FeedhistoryPage} from "../feedhistory/feedhistory"
+import { SleephistoryPage} from "../sleephistory/sleephistory"
+import { DoctorhistoryPage} from "../doctorhistory/doctorhistory"
 
 import { RepositoryProvider } from "../../providers/repository/repository";
 import { Observable, Subscription } from 'rxjs/Rx';
@@ -65,6 +68,12 @@ export class HomePage {
       this.navCtrl.push(SleepPage, {})
     }else if (item === 'doctor') {
       this.navCtrl.push(DoctorPage, {})
+    }else if (item === 'feedHistory') {
+      this.navCtrl.push(FeedhistoryPage, {})
+    }else if (item === 'sleepHistory') {
+      this.navCtrl.push(SleephistoryPage, {})
+    }else if (item === 'doctorHistory') {
+      this.navCtrl.push(DoctorhistoryPage, {})
     }
 
   }

@@ -10,6 +10,9 @@ import { SleepPage } from '../pages/sleep/sleep';
 import { DoctorPage } from '../pages/doctor/doctor';
 import { HappyPage } from '../pages/happy/happy';
 import { OnboardingPage } from '../pages/onboarding/onboarding';
+import { FeedhistoryPage } from '../pages/feedhistory/feedhistory';
+import { SleephistoryPage } from '../pages/sleephistory/sleephistory';
+import { DoctorhistoryPage } from '../pages/doctorhistory/doctorhistory';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -26,7 +29,10 @@ import { IonicStorageModule } from '@ionic/storage';
     SleepPage,
     DoctorPage,
     HappyPage,
-    OnboardingPage
+    OnboardingPage,
+    FeedhistoryPage,
+    SleephistoryPage,
+    DoctorhistoryPage
   ],
   imports: [
     BrowserModule,
@@ -41,7 +47,10 @@ import { IonicStorageModule } from '@ionic/storage';
     SleepPage,
     DoctorPage,
     HappyPage,
-    OnboardingPage
+    OnboardingPage,
+    FeedhistoryPage,
+    SleephistoryPage,
+    DoctorhistoryPage
   ],
   providers: [
     StatusBar,

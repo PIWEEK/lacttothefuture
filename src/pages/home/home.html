@@ -139,13 +139,13 @@
 <ion-footer>
   <ion-chip>
     <div class="item">
-      <img src="assets/img/eat_history.png" class="icon"/>
+      <img src="assets/img/eat_history.png" class="icon" (click)="itemTapped('feedHistory')"/>
     </div>
     <div class="item">
-      <img src="assets/img/sleep_history.png" class="icon"/>
+      <img src="assets/img/sleep_history.png" class="icon" (click)="itemTapped('sleepHistory')"/>
     </div>
     <div class="item">
-      <img src="assets/img/doctor_history.png" class="icon"/>
+      <img src="assets/img/doctor_history.png" class="icon" (click)="itemTapped('doctorHistory')"/>
     </div>
   </ion-chip>
 </ion-footer>
