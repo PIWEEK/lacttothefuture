@@ -6,13 +6,15 @@ import { Storage } from '@ionic/storage';
 export class RepositoryProvider {
 
   public currentBaby: any;
-  private babiesList: any;
+  public babiesList: any;
   public cardsData: any;
+  public ready: boolean;
 
 
   constructor(private storage: Storage) {
+    this.ready = false;
     //TODO: For now, we clear the data every time. Remove this clear ASAP
-    this.storage.set('lact_data', '{}');
+    //this.storage.set('lact_data', '{}');
 
     this.cardsData = {
         nextFeed: {
@@ -210,8 +212,10 @@ export class RepositoryProvider {
         }
 
         this.updateCardData();
+        this.ready = true;
       } else {
         this.babiesList = [];
+        this.ready = true;
         //TODO
         //Open onboarding
         //this.createSampleData();

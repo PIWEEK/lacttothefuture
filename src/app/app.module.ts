@@ -13,6 +13,7 @@ import { OnboardingPage } from '../pages/onboarding/onboarding';
 import { FeedhistoryPage } from '../pages/feedhistory/feedhistory';
 import { SleephistoryPage } from '../pages/sleephistory/sleephistory';
 import { DoctorhistoryPage } from '../pages/doctorhistory/doctorhistory';
+import { SelectbabyPage } from '../pages/selectbaby/selectbaby';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -32,7 +33,8 @@ import { IonicStorageModule } from '@ionic/storage';
     OnboardingPage,
     FeedhistoryPage,
     SleephistoryPage,
-    DoctorhistoryPage
+    DoctorhistoryPage,
+    SelectbabyPage
   ],
   imports: [
     BrowserModule,
@@ -50,7 +52,8 @@ import { IonicStorageModule } from '@ionic/storage';
     OnboardingPage,
     FeedhistoryPage,
     SleephistoryPage,
-    DoctorhistoryPage
+    DoctorhistoryPage,
+    SelectbabyPage
   ],
   providers: [
     StatusBar,

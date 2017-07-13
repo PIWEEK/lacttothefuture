@@ -31,5 +31,8 @@ export class OnboardingPage {
       this.navCtrl.pop();
     }
   }
+  cancel() {
+    this.navCtrl.pop();
+  }
 
 }

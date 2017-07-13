@@ -1,3 +1,46 @@
 page-selectbaby {
+    &.ion-page {
+        font-family: 'ralewayregular', sans-serif;
+    }
+    .bar-button,
+    .bar-buttons {
+        color: #aec6d5;
+        position: absolute;
+    }
+    .bar-buttons {
+        right: 3.2em;
+        top: 1.2em;
+    }
+    .back-button {
+        z-index: 1000;
+    }
+    .toolbar-title {
+        font-family: 'ralewaybold', sans-serif;
+        color: #aec6d5;
+        width: 100%;
+        text-align: center;
+        font-size: 1.6em;
+    }
+
+    .content {
+        text-align: center;
+    }
+
+    .item {
+        margin: .6em 0;
+    }
+
+    ion-avatar {
+        .icon {
+          background: linear-gradient(to right top, #38d6c8 0%,#7442c2 30%,#bda5e2 100%);
+          box-shadow: 0px 5px 12px 0px rgba(60, 50, 101, 0.33);
+          border-radius: 5px;
+          padding: .9em .2em;
+          height: 4em;
+          width: 4em;
+        }
+    }
+
+
 
 }

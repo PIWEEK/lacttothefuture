@@ -1,12 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { RepositoryProvider } from "../../providers/repository/repository";
 
-/**
- * Generated class for the SelectbabyPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
 @IonicPage()
 @Component({
   selector: 'page-selectbaby',
@@ -14,11 +9,18 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class SelectbabyPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public repository: RepositoryProvider) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SelectbabyPage');
+  }
+
+  selectBaby(baby){
+    this.repository.currentBaby = this.repository.babiesList[baby];
+    this.repository.updateCardData();
+    this.navCtrl.pop();
+
   }
 
 }
