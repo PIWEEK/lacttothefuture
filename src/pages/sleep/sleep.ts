@@ -18,7 +18,7 @@ export class SleepPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController, private repository: RepositoryProvider, private modalCtrl: ModalController) {
     this.confirmedExit = false;
-    this.sleepTimeISOString = new Date().toISOString();
+    this.sleepTimeISOString = new Date(new Date().getTime() - (new Date().getTimezoneOffset() * 60000)).toISOString();
 
 
     var txt = "";

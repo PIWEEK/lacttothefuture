@@ -14,7 +14,7 @@ export class OnboardingPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public repository: RepositoryProvider) {
     this.sex = 'girl';
-    this.birthDateISOString = new Date().toISOString();
+    this.birthDateISOString = new Date(new Date().getTime() - (new Date().getTimezoneOffset() * 60000)).toISOString();
   }
 
   ionViewDidLoad() {

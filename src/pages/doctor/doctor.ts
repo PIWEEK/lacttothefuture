@@ -15,7 +15,14 @@ export class DoctorPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController, private repository: RepositoryProvider) {
     this.confirmedExit = false;
-    this.doctorTimeISOString = new Date().toISOString();
+    var tomorrow = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+    tomorrow.setHours(10);
+    tomorrow.setMinutes(0);
+    tomorrow.setSeconds(0);
+    tomorrow.setMilliseconds(0);
+    tomorrow = new Date(tomorrow.getTime() - (tomorrow.getTimezoneOffset() * 60000))
+
+    this.doctorTimeISOString = tomorrow.toISOString();
   }
 
   ionViewDidLoad() {

@@ -66,8 +66,8 @@ export class EatPage {
     this.rightFeedingSeconds = "0m 00s";
     this.feedBottleType = "formula";
     var now = new Date()
-    this.feedStartTimeISOString = now.toISOString();
-    this.feedEndTimeISOString = now.toISOString();
+    this.feedStartTimeISOString = new Date(new Date().getTime() - (new Date().getTimezoneOffset() * 60000)).toISOString();
+    this.feedEndTimeISOString = this.feedStartTimeISOString;
     var year = new Date();
     year.setFullYear(100)
     this.feedQuantityISOString = year.toISOString();
