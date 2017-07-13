@@ -1,27 +1,26 @@
 import MLR from 'ml-regression-multivariate-linear';
 import _ from "lodash";
 
-function formatData(row) {
-    return [
-        row.awake,
-        row.sleeping,
-        row.morning === "TRUE" ? 1 : 0,
-        row.evening === "TRUE" ? 1 : 0,
-        row.night === "TRUE" ? 1 : 0,
-    ]
-}
+import {initialSleepData, sleepEvents} from "./data";
+import {parseInitialSleepData, parseSleepEvents} from "./converter";
 
-function transformOneData(data) {
-    let transformedData = []
-    _.each(data, (item, idx) => {
-        if (data.length > idx + 1) {
-            transformedData.push([].concat(
-                formatData(data[idx]),
-                [data[idx+1].awake]
-            ))
-        }
-    });
-    return transformedData;
+// Sleep register format: [Awake, Sleeping, Morning, Afternoon, Night]
+// TODO: Not always take all available registers (i.e. just the last N regs)
+function getTrainingData(data) {
+  let transformedData = [];
+  _.each(data, (item, idx) => {
+      if (data.length > idx + 1) {
+        transformedData.push([].concat(
+              data[idx],
+              [data[idx+1][0]]
+          ))
+      }
+  });
+
+  let inputData = _.map(transformedData, (row) => row.slice(0, row.length-1));
+  let outputData = _.map(transformedData, (row) => row.slice(row.length-1, row.length));
+
+  return {input: inputData, output: outputData};
 }
 
 function getLearningCurve(input, output) {
@@ -29,27 +28,21 @@ function getLearningCurve(input, output) {
 }
 
 function getCurve(data) {
-  // TODO: Not to always take all the available registers (i.e. just the last N regs)
-
-  let input = _.map(data, (row) => row.slice(0, row.length-1));
-  let output = _.map(data, (row) => row.slice(row.length-1, row.length));
-
-  const curve = getLearningCurve(input, output);
+  let trainingData = getTrainingData(data);
+  const curve = getLearningCurve(trainingData.input, trainingData.output);
 
   return curve;
 }
 
-export function predict(historicalData) {
-  const mlr = getCurve(historicalData);
-  let prediction = mlr.predict(_.last(historicalData));
+export function predictSleepData() {
+  let sleepData = parseInitialSleepData(initialSleepData).concat(parseSleepEvents(sleepEvents));
+  const mlr = getCurve(sleepData);
+
+  let prediction = mlr.predict(_.last(sleepData));
+
+  console.log(parseInitialSleepData(initialSleepData).length);
+  console.log(parseSleepEvents(sleepEvents).length);
+  console.log(sleepData.length);
 
   return prediction;
 }
-
-// // Last known sleeping register
-// let lastSleepData = [60, 45, 0, 0, 1];
-//
-// // Get the prediction for the baby to be awake, given all the previous sleeping registers,
-// // stored in sleepData.json file
-// let awakePrediction = Math.round(predict(lastSleepData))
-// console.log("Your baby will be awake for " + awakePrediction + " minutes");
