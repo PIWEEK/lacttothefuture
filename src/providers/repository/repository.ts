@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 import { Storage } from '@ionic/storage';
+import * as mlr from "../../utils/mlr";
+import * as converter from "../../utils/converter";
 
 @Injectable()
 export class RepositoryProvider {
@@ -136,7 +138,7 @@ export class RepositoryProvider {
     var i =0;
     while ((i<this.currentBaby.doctorHistory.length) && (this.currentBaby.doctorHistory[i].timestamp < doctorData.timestamp)){
       i+=1;
-    }    
+    }
 
 
     this.currentBaby.doctorHistory.splice(i, 0, doctorData);
@@ -334,7 +336,10 @@ export class RepositoryProvider {
   predictAwakeTime() {
     //TODO: Call ML
     //For now, 4 hours later
-    return this.currentBaby.sleepHistory[this.currentBaby.sleepHistory.length-1].timestamp + 240 * 60000;
+    let predictAwake = converter.minutesToMillis(mlr.predictSleepData(this.currentBaby.sleepHistory));
+    console.log(predictAwake);
+    return predictAwake
+    // return this.currentBaby.sleepHistory[this.currentBaby.sleepHistory.length-1].timestamp + 240 * 60000;
   }
 
 }

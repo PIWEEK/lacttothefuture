@@ -34,15 +34,12 @@ function getCurve(data) {
   return curve;
 }
 
-export function predictSleepData() {
-  let sleepData = parseInitialSleepData(initialSleepData).concat(parseSleepEvents(sleepEvents));
+export function predictSleepData(babySleepData) {
+  // let sleepData = parseInitialSleepData(initialSleepData).concat(parseSleepEvents(sleepEvents));
+  let sleepData = parseInitialSleepData(initialSleepData).concat(parseSleepEvents(babySleepData));
   const mlr = getCurve(sleepData);
 
   let prediction = mlr.predict(_.last(sleepData));
-
-  console.log(parseInitialSleepData(initialSleepData).length);
-  console.log(parseSleepEvents(sleepEvents).length);
-  console.log(sleepData.length);
 
   return prediction;
 }

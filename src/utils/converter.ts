@@ -22,6 +22,10 @@ function millisToMinutes(millis) {
   return Math.round(millis/ 60000);
 }
 
+export function minutesToMillis(minutes) {
+  return minutes * 60000;
+}
+
 function minutesOfDifference(timestamp1, timestamp2){
   return millisToMinutes(timestamp2 - timestamp1);
 }
