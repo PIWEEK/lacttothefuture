@@ -63,6 +63,19 @@ function parseAwakeEvent(thisEvent, previousEvent, twoEventsAgo) {
   return sleepRegister
 }
 
+function parseFeedEvent(thisEvent, previousEvent) {
+  let feedingTime = thisEvent.totalFeedingTime;
+  let noFeedingTime = minutesOfDifference(
+    previousEvent.feedEndTime,
+    thisEvent.feedStartTime
+  );
+  let dayRange = getDayRange(thisEvent.timestamp);
+  let feedRegister = [feedingTime, noFeedingTime, dayRange[0], dayRange[1], dayRange[2]];
+  console.log(feedRegister);
+
+  return feedRegister
+}
+
 export function parseSleepEvents(sleepEvents) {
   let sleepRegisters = [];
   _.each(sleepEvents, (sleepEvent, idx) => {
@@ -78,4 +91,19 @@ export function parseSleepEvents(sleepEvents) {
   });
 
   return sleepRegisters;
+}
+
+
+export function parseFeedEvents(feedEvents) {
+  let feedRegisters = [];
+  _.each(feedEvents, (feedEvent, idx) => {
+    // It's required to have a previous event
+    if (idx >= 1) {
+      console.log("Index = " + idx);
+      let feedRegister = parseFeedEvent(feedEvent, feedEvents[idx - 1]);
+      feedRegisters.push(feedRegister);
+    }
+  });
+
+  return feedRegisters;
 }

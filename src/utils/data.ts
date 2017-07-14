@@ -1144,3 +1144,18 @@ export const sleepEvents = [
     happy: 3
   }
 ];
+
+export const feedEvents = [
+  { feedStartTime: 1499948622631,
+    feedEndTime: 1499949694523,
+    totalFeedingTime: 15,
+    comment: "End Feeding Event (1)",
+    happy: 3
+  },
+  { feedStartTime: 1499951288414,
+    feedEndTime: 1499953668354,
+    totalFeedingTime: 15,
+    comment: "End Feeding Event (1)",
+    happy: 3
+  }
+];

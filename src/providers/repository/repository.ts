@@ -3,6 +3,7 @@ import 'rxjs/add/operator/map';
 import { Storage } from '@ionic/storage';
 import * as mlr from "../../utils/mlr";
 import * as converter from "../../utils/converter";
+import {feedEvents} from "../../utils/data";
 
 @Injectable()
 export class RepositoryProvider {
@@ -324,7 +325,13 @@ export class RepositoryProvider {
   predictFeed() {
     //TODO: Call ML
     //For now, 3 hours later
-    return this.currentBaby.feedHistory[this.currentBaby.feedHistory.length-1].feedEndTime + 180 * 60000;
+    // return this.currentBaby.feedHistory[this.currentBaby.feedHistory.length-1].feedEndTime + 180 * 60000;
+
+    // let predictNextFeedTime = mlr.predictNextFeedTime(this.currentBaby.feedHistory);
+    let predictNextFeedTime = mlr.predictNextFeedTime(feedEvents);
+    console.log("The baby will be hungry again in " + predictNextFeedTime + "minutes");
+
+    return predictNextFeedTime
   }
 
   predictSleepTime() {

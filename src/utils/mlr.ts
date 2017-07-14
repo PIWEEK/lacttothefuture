@@ -1,12 +1,13 @@
 import MLR from 'ml-regression-multivariate-linear';
 import _ from "lodash";
 
-import {initialSleepData} from "./data";
-import {parseInitialSleepData, parseSleepEvents} from "./converter";
+import {initialSleepData, feedEvents} from "./data";
+import {parseInitialSleepData, parseSleepEvents, parseFeedEvents} from "./converter";
 
-// Sleep register format: [Awake, Sleeping, Morning, Afternoon, Night]
+// Sleep register format:   [awake, sleeping, morning, afternoon, night]
+// Feeding Register Format: [feedingTime, noFeedingTime, morning, afternoon, night];
 // TODO: Not always take all available registers (i.e. just the last N regs)
-function getSleepTrainingData(data, predictionType) {
+function getTrainingData(data, predictionType) {
   let transformedData = [];
   _.each(data, (item, idx) => {
       if (data.length > idx + 1) {
@@ -15,7 +16,7 @@ function getSleepTrainingData(data, predictionType) {
            data[idx],
            [data[idx+1][0]]
           ))
-        } else if (predictionType == "sleepingTime") {
+        } else if (predictionType == "sleepingTime" || predictionType == "nextFeedTime") {
           transformedData.push([].concat(
             data[idx],
             [data[idx+1][1]]
@@ -35,7 +36,7 @@ function getLearningCurve(input, output) {
 }
 
 function getCurve(data, predictionType) {
-  let trainingData = getSleepTrainingData(data, predictionType);
+  let trainingData = getTrainingData(data, predictionType);
   const curve = getLearningCurve(trainingData.input, trainingData.output);
 
   return curve;
@@ -57,6 +58,23 @@ export function predictAwakeTime(babySleepData) {
 
 export function predictSleepTime(babySleepData) {
   let prediction = sleepingPrediction(babySleepData, "sleepingTime")
+
+  return prediction;
+}
+
+function feedPrediction(babyFeedData, predictionType) {
+  let feedData = parseFeedEvents(babyFeedData);
+  console.log(feedData);
+
+  const mlr = getCurve(feedData, predictionType);
+
+  let prediction = mlr.predict(_.last(feedData));
+
+  return prediction;
+}
+
+export function predictNextFeedTime(feedEvents) {
+  let prediction = feedPrediction(feedEvents, "nextFeedTime");
 
   return prediction;
 }
