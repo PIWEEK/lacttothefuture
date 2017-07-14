@@ -328,18 +328,16 @@ export class RepositoryProvider {
   }
 
   predictSleepTime() {
-    //TODO: Call ML
-    //For now, 4 hours later
-    return this.currentBaby.sleepHistory[this.currentBaby.sleepHistory.length-1].timestamp + 240 * 60000;
+    let predictSleeping = mlr.predictSleepTime(this.currentBaby.sleepHistory);
+    console.log("The baby will be sleeping for " + predictSleeping + "minutes");
+    return predictSleeping
   }
 
   predictAwakeTime() {
-    //TODO: Call ML
-    //For now, 4 hours later
-    let predictAwake = converter.minutesToMillis(mlr.predictSleepData(this.currentBaby.sleepHistory));
-    console.log(predictAwake);
+    let predictAwake = mlr.predictAwakeTime(this.currentBaby.sleepHistory);
+    console.log("The baby will be awake for " + predictAwake + "minutes");
+
     return predictAwake
-    // return this.currentBaby.sleepHistory[this.currentBaby.sleepHistory.length-1].timestamp + 240 * 60000;
   }
 
 }
