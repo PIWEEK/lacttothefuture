@@ -131,11 +131,8 @@ export class HomePage {
               this.lastFeedText = (this.repository.cardsData.nextFeed.bottleType=='formula')?'FÓRMULA':((this.repository.cardsData.nextFeed.bottleType=='mother')?'EXTRAÍDA':'AGUA');
           } else if (this.repository.cardsData.nextFeed.lastFeedType == 'solid') {
               this.lastFeedIcon = 'eat_solid';
-              this.lastFeedText = this.repository.cardsData.nextFeed.solidName;
-              if (this.lastFeedText && this.lastFeedText.length > 25){
-                this.lastFeedText = this.lastFeedText.substr(0,22);
-                this.lastFeedText += '...';
-              }
+              this.lastFeedText = this.repository.cardsData.nextFeed.solidName?this.repository.cardsData.nextFeed.solidName:'???';
+
           }
 
           millis = now - this.repository.cardsData.nextFeed.feedEndTime;

@@ -65,7 +65,9 @@ export class DoctorPage {
   }
 
   public saveData() {
-    this.repository.saveDoctorData(new Date(this.doctorTimeISOString), this.comments);
+    var date = new Date(this.doctorTimeISOString);
+    date = new Date(date.getTime() + (date.getTimezoneOffset() * 60000));
+    this.repository.saveDoctorData(date, this.comments);
     this.confirmedExit = true;
     this.navCtrl.pop();
   }

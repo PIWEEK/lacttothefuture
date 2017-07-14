@@ -65,7 +65,6 @@ export class EatPage {
     this.leftFeedingSeconds = "0m 00s";
     this.rightFeedingSeconds = "0m 00s";
     this.feedBottleType = "formula";
-    var now = new Date()
     this.feedStartTimeISOString = new Date(new Date().getTime() - (new Date().getTimezoneOffset() * 60000)).toISOString();
     this.feedEndTimeISOString = this.feedStartTimeISOString;
     var year = new Date();
@@ -218,6 +217,7 @@ export class EatPage {
 
 
   saveData() {
+    var date;
     if (this.currentFeedMethod == 'breast') {
       if (this.currentFeedBreast != ''){
         this.currentFeedBreast == '';
@@ -260,9 +260,12 @@ export class EatPage {
       }
 
     } else if (this.currentFeedMethod == 'bottle') {
-        this.saveDataFeedStartTime = new Date(this.feedStartTimeISOString);
+        date = new Date(this.feedStartTimeISOString);
+        date = new Date(date.getTime() + (date.getTimezoneOffset() * 60000));
+        this.saveDataFeedStartTime = date;
         this.saveDataFeedEndTime = this.saveDataFeedStartTime;
-        this.saveDataTotalFeedingTime = 0;
+        //TODO Check time from bottle
+        this.saveDataTotalFeedingTime = 15 * 60000;
         this.saveDataLeftFeedingTime = 0;
         this.saveDataRightFeedingTime = 0;
         this.saveDataLastFeedBreast = '';
@@ -271,9 +274,12 @@ export class EatPage {
         this.saveDataFeedBottleType = this.feedBottleType;
         this.showHappiness();
     } else if (this.currentFeedMethod == 'solid') {
-        this.saveDataFeedStartTime = new Date(this.feedStartTimeISOString);
+        date = new Date(this.feedStartTimeISOString);
+        date = new Date(date.getTime() + (date.getTimezoneOffset() * 60000));
+        this.saveDataFeedStartTime = date;
         this.saveDataFeedEndTime = this.saveDataFeedStartTime;
-        this.saveDataTotalFeedingTime = 0;
+        //TODO Check time from solid
+        this.saveDataTotalFeedingTime = 25 * 60000;
         this.saveDataLeftFeedingTime = 0;
         this.saveDataRightFeedingTime = 0;
         this.saveDataLastFeedBreast = '';

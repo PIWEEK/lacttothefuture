@@ -185,7 +185,6 @@ export class RepositoryProvider {
     if (! this.babiesList) {
       this.babiesList = [];
     }
-    console.log(this.babiesList);
     this.babiesList.push(this.currentBaby);
     this.saveToLocalStorage();
     this.updateCardData();
@@ -330,14 +329,14 @@ export class RepositoryProvider {
   predictSleepTime() {
     let predictSleeping = mlr.predictSleepTime(this.currentBaby.sleepHistory);
     console.log("The baby will be sleeping for " + predictSleeping + "minutes");
-    return predictSleeping
+    return this.cardsData.nextSleep.timestamp + (predictSleeping * 60 * 1000);
   }
 
   predictAwakeTime() {
     let predictAwake = mlr.predictAwakeTime(this.currentBaby.sleepHistory);
     console.log("The baby will be awake for " + predictAwake + "minutes");
 
-    return predictAwake
+    return this.cardsData.nextSleep.timestamp + (predictAwake * 60 * 1000);
   }
 
 }

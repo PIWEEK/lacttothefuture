@@ -91,7 +91,9 @@ export class SleepPage {
   }
 
   public saveAndExit(){
-    this.repository.saveSleepData(new Date(this.sleepTimeISOString), this.comments, this.happiness);
+    var date = new Date(this.sleepTimeISOString);
+    date = new Date(date.getTime() + (date.getTimezoneOffset() * 60000));
+    this.repository.saveSleepData(date, this.comments, this.happiness);
     this.confirmedExit = true;
     this.navCtrl.pop();
   }
