@@ -16,10 +16,10 @@
     <ion-item-sliding *ngFor="let baby of repository.babiesList;let i = index">
       <ion-item (click)="selectBaby(i)">
         <ion-avatar item-start>
-          <img [src]="repository.currentBaby.sex=='boy'?'assets/img/boy_awake.png':'assets/img/girl_awake.png'" class="icon"/>
+          <img [src]="baby.sex=='boy'?'assets/img/boy_awake.png':'assets/img/girl_awake.png'" class="icon"/>
         </ion-avatar>
         <h2>{{ baby.name }}</h2>
-      </ion-item>      
+      </ion-item>
     </ion-item-sliding>
   </ion-list>
 </ion-content>
