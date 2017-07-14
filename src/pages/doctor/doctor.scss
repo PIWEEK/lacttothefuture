@@ -48,7 +48,7 @@ page-doctor {
         padding: 0.5em;
         margin: 1em auto;
         color: #7544c3;
-        text-overflow: ellipsis;        
+        text-overflow: ellipsis;
         overflow: hidden;
         .icon_container{
             display: inline-block;
@@ -69,6 +69,12 @@ page-doctor {
                 font-weight: bold;
             }
         }
+    }
+
+
+    .item-md {
+      border-radius: 6px;
+      margin-bottom: 1em;
     }
 
 }

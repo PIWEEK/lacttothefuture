@@ -53,7 +53,7 @@ page-sleep {
         padding: 0.5em;
         margin: 1em auto;
         color: #7442c2;
-        text-overflow: ellipsis;        
+        text-overflow: ellipsis;
         overflow: hidden;
         .icon_container{
             display: inline-block;
@@ -74,6 +74,11 @@ page-sleep {
                 font-weight: bold;
             }
         }
+    }
+
+    .item-md {
+      border-radius: 6px;
+      margin-bottom: 1em;
     }
 
 }

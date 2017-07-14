@@ -48,7 +48,7 @@ page-eat {
         padding: 0.5em;
         margin: 0 auto;
         color: #7544c3;
-        text-overflow: ellipsis;        
+        text-overflow: ellipsis;
         overflow: hidden;
         .icon_container{
             display: inline-block;
@@ -118,11 +118,19 @@ page-eat {
     .button-outline-md {
         color:white;
         border-color: white;
+        border-width: 2px;
+        font-family: 'ralewaymedium', sans-serif;
     }
 
     .feed_form {
         width: 90%;
         margin: 0 auto;
+    }
+
+
+    .item-md {
+      border-radius: 6px;
+      margin-bottom: 1em;
     }
 
 }

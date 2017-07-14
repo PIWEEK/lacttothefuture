@@ -17,13 +17,13 @@
       </div>
     </div>
 
-    <div>          
-        <ion-input placeholder="Nombre del bebé" [(ngModel)]="name"></ion-input>          
+    <div>
+        <ion-input placeholder="Nombre del bebé" [(ngModel)]="name"></ion-input>
     </div>
-    
 
-    
-    <div class="birthDayContainer">      
+
+
+    <div class="birthDayContainer">
       <ion-item>
         <ion-label>Cumpleaños del bebé</ion-label>
         <ion-datetime displayFormat="DD/MM/YYYY" pickerFormat="DD MMMM YYYY" [(ngModel)]="birthDateISOString"></ion-datetime>
@@ -31,6 +31,6 @@
     </div>
 
     <button ion-button outline round (click)="saveData()">Empezar</button>
-    <button ion-button outline round (click)="cancel()">Cancelar</button>
+    <button class="cancelar-btn" ion-button outline round (click)="cancel()">Cancelar</button>
 
 </ion-content>
