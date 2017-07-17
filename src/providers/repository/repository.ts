@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 import { Storage } from '@ionic/storage';
 import * as mlr from "../../utils/mlr";
-import * as converter from "../../utils/converter";
 import {feedEvents} from "../../utils/data";
 
 @Injectable()

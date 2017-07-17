@@ -1157,5 +1157,11 @@ export const feedEvents = [
     totalFeedingTime: 15,
     comment: "End Feeding Event (1)",
     happy: 3
+  },
+  { feedStartTime: 1499951288414,
+    feedEndTime: 1499953668354,
+    totalFeedingTime: 15,
+    comment: "End Feeding Event (1)",
+    happy: 3
   }
 ];
