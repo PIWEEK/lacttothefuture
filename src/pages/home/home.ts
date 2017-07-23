@@ -200,23 +200,26 @@ export class HomePage {
           + " " + ("0"+appointment.getHours()).slice(-2)
           + ":" + ("0"+appointment.getMinutes()).slice(-2);
 
+
+
         millis = this.repository.cardsData.nextDoctor.timestamp - now;
         if (millis >0) {
-          var days = Math.floor(millis / 86400000);
-          if (days > 1){
-              nextDoctor = days +" días"
+          let appointmentDay = new Date(this.repository.cardsData.nextDoctor.timestamp);
+          appointmentDay.setHours(0,0,0,0);
+
+          let nowDay = new Date();
+          nowDay.setHours(0,0,0,0);
+          let days = Math.floor((appointmentDay.getTime() - nowDay.getTime()) / 86400000);
+
+          if (days == 0) {
+            hours = Math.floor(millis / 3600000);
+            mins = Math.floor(((millis - (hours * 3600000)) / 60000));
+            minsPad = ("0" + mins).slice(-2)
+            nextDoctor = hours + "h "+minsPad+"min";
           } else if (days == 1) {
               nextDoctor = "Mañana"
           } else {
-            if (today.getDate() != appointment.getDate()){
-              //Less than 24h, but tomorrow
-              nextDoctor = "Mañana"
-            } else {
-              hours = Math.floor(millis / 3600000);
-              mins = Math.floor(((millis - (hours * 3600000)) / 60000));
-              minsPad = ("0" + mins).slice(-2)
-              nextDoctor = hours + "h "+minsPad+"min";
-            }
+            nextDoctor = days +" días"
           }
         } else {
           this.dateNextDoctor = "AHORA";
