@@ -10,6 +10,7 @@ import { RepositoryProvider } from "../../providers/repository/repository";
 export class FeedhistoryPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public repository: RepositoryProvider) {
+
   }
 
   ionViewDidLoad() {
@@ -18,12 +19,12 @@ export class FeedhistoryPage {
 
   public selectFeedIcon(entry){
     if (entry.type == 'breast') {
-      return 'both_breast';       
+      return 'both_breast';
     } else if (entry.type == 'solid') {
-      return 'eat_solid';            
+      return 'eat_solid';
     } else{
       return 'eat_bottle';
-    } 
+    }
   }
 
   public calcMinutes(millis){
@@ -36,5 +37,6 @@ export class FeedhistoryPage {
         return "0m 0s";
       }
   }
+
 
 }

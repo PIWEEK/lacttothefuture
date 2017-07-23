@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 import { Storage } from '@ionic/storage';
 import * as mlr from "../../utils/mlr";
-import * as converter from "../../utils/converter";
+//import * as converter from "../../utils/converter";
 
 @Injectable()
 export class RepositoryProvider {
@@ -62,33 +62,108 @@ export class RepositoryProvider {
     this.babiesList = [
       {
         name:'Diego',
-        sex: 'girl',
-        feedHistory: [
-         /* {
-            feedStartTime: new Date().getTime() - 122 * 60000,
-            feedEndTime: new Date().getTime() - 111 * 60000,
-            happy: 5,
-            totalFeedingTime: 8000,
-            leftFeedingTime: 3000,
-            rightFeedingTime: 5000,
-            lastFeedType: 'breast',
-            lastFeedBreast: 'r',
-            comment: '',
-            type: 'breast',
-            quantity: 0,
-            bottleType: '',
-            solidName: ''
-          }*/
-        ]
+        sex: 'boy',
+        feedHistory: [],
+        sleepHistory: [],
+        doctorHistory: []
+
       },
       {
-        name:'Sonia',
+        name:'Maya',
         sex: 'girl',
+        feedHistory: [],
+        sleepHistory: [],
+        doctorHistory: []
+      },
+      {
+        name:'Juan',
+        sex: 'boy',
         feedHistory: [],
         sleepHistory: [],
         doctorHistory: []
       }
     ]
+
+    var date = new Date().getTime() - 86400000; //24h
+    while (date < new Date().getTime()){
+      var feedingTime = ((Math.floor((Math.random() * 30) + 15)) * 60000); // Min 15 mins, max 45 mins
+      var left = feedingTime - ((Math.floor((Math.random() * feedingTime) + 1)));
+      var feedTypes = ['breast', 'bottle', 'solid'];
+      var breasts = ['r', 'l'];
+      var bottleTypes = ['formula', 'extracted', 'watter'];
+      var solidTypes = ['Macarrones', 'Puré de verduras', 'Potito de frutas'];
+
+      var feed = {
+            feedStartTime: date,
+            feedEndTime: date + feedingTime,
+            happy: Math.floor((Math.random() * 5) + 1),
+            totalFeedingTime: feedingTime,
+            leftFeedingTime: left,
+            rightFeedingTime: feedingTime - left,
+            lastFeedBreast: breasts[Math.floor(Math.random() * 2)],
+            comment: 'Lorem ipsum dolor...',
+            type: feedTypes[Math.floor(Math.random() * 3)],
+            quantity: Math.floor(Math.random() * 50) + 50,
+            bottleType: bottleTypes[Math.floor(Math.random() * 3)],
+            solidName: solidTypes[Math.floor(Math.random() * 3)]
+          }
+      this.babiesList[0].feedHistory.push(feed);
+      date = date + ((Math.floor(Math.random() * 60) + 240) * 60000);
+    }
+
+    date = new Date().getTime() - 86400000; //24h
+    var status = "AWAKE";
+    while (date < new Date().getTime()){
+
+      var sleep = {
+            timestamp: date,
+            comment: 'Lorem ipsum dolor...',
+            status: status,
+            happy: Math.floor((Math.random() * 5) + 1),
+          }
+      this.babiesList[0].sleepHistory.push(sleep);
+      date = date + ((Math.floor(Math.random() * 60) + 240) * 60000);
+      if (status == "AWAKE"){
+        status = "SLEEPING"
+      } else {
+        status = "AWAKE"
+      }
+    }
+
+
+    var d = new Date();
+    d.setHours(12);
+    d.setMinutes(0);
+    d.setDate(16);
+
+
+    var doctorData = {
+          timestamp: d.getTime(),
+          comment: "Tiene muchos mocos y fiebre"
+    }
+    this.babiesList[0].doctorHistory.push(doctorData);
+
+    d.setHours(13);
+    d.setMinutes(0);
+    d.setDate(24);
+
+    doctorData = {
+          timestamp: d.getTime(),
+          comment: "Vacuna sarampión"
+    }
+    this.babiesList[0].doctorHistory.push(doctorData);
+
+
+    d.setHours(11);
+    d.setMinutes(30);
+    d.setDate(28);
+
+    doctorData = {
+          timestamp: d.getTime(),
+          comment: "Vacuna rubeola"
+    }
+    this.babiesList[0].doctorHistory.push(doctorData);
+
 
     this.currentBaby = this.babiesList[0]
 

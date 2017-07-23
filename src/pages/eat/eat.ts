@@ -27,11 +27,16 @@ export class EatPage {
   private previousFeedText: string;
   private feedBottleType: string;
   private feedSolidName: string;
+  private timezoneOffset: number;
 
 
   private totalFeedingTime: number;
   private totalFeedingSeconds: string;
   private leftFeedingTime: number;
+  private leftStartTime: number;
+  private leftEndTime: number;
+  private rightStartTime: number;
+  private rightEndTime: number;
   private leftFeedingSeconds: string;
   private rightFeedingTime: number;
   private rightFeedingSeconds: string;
@@ -54,6 +59,7 @@ export class EatPage {
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController, public repository: RepositoryProvider, public modalCtrl: ModalController) {
+    this.timezoneOffset = (new Date().getTimezoneOffset() * 60000);
     this.currentFeedMethod = 'breast';
     this.currentFeedNow = true;
     this.feedBreast = 'l';
@@ -65,15 +71,32 @@ export class EatPage {
     this.leftFeedingSeconds = "0m 00s";
     this.rightFeedingSeconds = "0m 00s";
     this.feedBottleType = "formula";
-    this.feedStartTimeISOString = new Date(new Date().getTime() - (new Date().getTimezoneOffset() * 60000)).toISOString();
+    this.feedStartTimeISOString = new Date(new Date().getTime() - this.timezoneOffset).toISOString();
     this.feedEndTimeISOString = this.feedStartTimeISOString;
     var year = new Date();
     year.setFullYear(100)
     this.feedQuantityISOString = year.toISOString();
+    this.updatePreviousFeedText();
 
+
+
+
+    //every second
+    this.$counter = Observable.interval(1000).map((x) => {
+        return x;
+    });
+
+    this.subscription = this.$counter.subscribe((x) => {
+        this.updateInfo();
+    });
+
+
+  }
+
+  private updatePreviousFeedText(){
     var txt = "";
     if (this.repository.cardsData.nextFeed.happy > 0){
-      var millis = new Date().getTime() - this.repository.cardsData.nextFeed.feedEndTime;
+      var millis = new Date().getTime() - this.repository.cardsData.nextFeed.feedStartTime;
       var hours = Math.floor(millis / 3600000);
       var mins = Math.floor(((millis - (hours * 3600000)) / 60000));
       var minsPad = ("0" + mins).slice(-2)
@@ -102,18 +125,6 @@ export class EatPage {
 
 
     this.previousFeedText = txt;
-
-
-    //every second
-    this.$counter = Observable.interval(1000).map((x) => {
-        return x;
-    });
-
-    this.subscription = this.$counter.subscribe((x) => {
-        this.updateInfo();
-    });
-
-
   }
 
   ionViewDidLoad() {
@@ -129,43 +140,67 @@ export class EatPage {
   }
 
   startStopFeeding(breast){
-    if (this.currentFeedBreast == breast){
+    let now = new Date();
+    this.consolidateTimes();
+
+    if (this.currentFeedBreast == breast){ //pause
         this.currentFeedBreast = '';
-        this.feedEndTime = new Date();
-    } else{
+        this.feedEndTime = now;
+    } else {
       this.currentFeedBreast = breast;
       this.lastFeedBreast = breast;
       if (!this.feedStartTime){
         this.feedStartTime = new Date();
       }
+      if (breast == 'l'){
+        this.leftStartTime = now.getTime();
+      } else {
+        this.rightStartTime = now.getTime();
+      }
     }
   }
 
-  updateInfo(){
-    var mins;
-    var seconds;
-    var secondsPad;
-    if (this.currentFeedBreast != ""){
-      this.totalFeedingTime += 1000;
-      mins = Math.floor(this.totalFeedingTime / 60000);
-      seconds = Math.floor(((this.totalFeedingTime - (mins * 60000)) / 1000));
-      secondsPad = ("0" + seconds).slice(-2);
-      this.totalFeedingSeconds = mins + "m " + secondsPad + "s";
-
-      if (this.currentFeedBreast == "l"){
-        this.leftFeedingTime += 1000;
-        mins = Math.floor(this.leftFeedingTime / 60000);
-        seconds = Math.floor(((this.leftFeedingTime - (mins * 60000)) / 1000));
-        secondsPad = ("0" + seconds).slice(-2);
-        this.leftFeedingSeconds = mins + "m " + secondsPad + "s";
-      } else {
-        this.rightFeedingTime += 1000;
-        mins = Math.floor(this.rightFeedingTime / 60000);
-        seconds = Math.floor(((this.rightFeedingTime - (mins * 60000)) / 1000));
-        secondsPad = ("0" + seconds).slice(-2);
-        this.rightFeedingSeconds = mins + "m " + secondsPad + "s";
-      }
+  private consolidateTimes(){
+    let now = new Date();
+    if (this.currentFeedBreast == 'l'){
+      this.leftEndTime = now.getTime();
+      this.leftFeedingTime += (this.leftEndTime - this.leftStartTime);
+    } else if (this.currentFeedBreast == 'r'){
+      this.rightEndTime = now.getTime();
+      this.rightFeedingTime += (this.rightEndTime - this.rightStartTime);
     }
+    this.totalFeedingTime = this.leftFeedingTime + this.rightFeedingTime;
+
+    console.log("Consolidate: "+this.leftFeedingTime+" + "+this.rightFeedingTime+" = "+this.totalFeedingTime);
+
+  }
+
+  updateInfo(){
+    let now = new Date();
+    let partialLeftTime = 0;
+    let partialRightTime = 0;
+    if (this.currentFeedBreast != ""){
+      if (this.currentFeedBreast == "l"){
+        partialLeftTime = now.getTime() - this.leftStartTime;
+        this.leftFeedingSeconds = this.millisToMinutesString(this.leftFeedingTime + partialLeftTime);
+      } else {
+        partialRightTime = now.getTime() - this.rightStartTime;
+        this.rightFeedingSeconds = this.millisToMinutesString(this.rightFeedingTime + partialRightTime);
+      }
+
+      console.log(partialLeftTime +", "+partialRightTime);
+
+      this.totalFeedingSeconds = this.millisToMinutesString(this.totalFeedingTime + partialLeftTime + partialRightTime);
+    }
+
+    this.updatePreviousFeedText();
+  }
+
+  private millisToMinutesString(millis){
+      let mins = Math.floor(millis / 60000);
+      let seconds = Math.floor(((millis - (mins * 60000)) / 1000));
+      let secondsPad = ("0" + seconds).slice(-2);
+      return mins + "m " + secondsPad + "s";
   }
 
   ionViewCanLeave() {
@@ -251,17 +286,21 @@ export class EatPage {
             this.saveDataLeftFeedingTime = 0;
             this.saveDataRightFeedingTime = this.saveDataTotalFeedingTime;
             this.saveDataLastFeedBreast = 'r';
+          } else if (this.feedBreast == 'bl'){
+            this.saveDataLeftFeedingTime = Math.round(this.saveDataTotalFeedingTime / 2);
+            this.saveDataRightFeedingTime = Math.round(this.saveDataTotalFeedingTime / 2);
+            this.saveDataLastFeedBreast = 'l';
           } else {
             this.saveDataLeftFeedingTime = Math.round(this.saveDataTotalFeedingTime / 2);
             this.saveDataRightFeedingTime = Math.round(this.saveDataTotalFeedingTime / 2);
-            this.saveDataLastFeedBreast = 'b';
+            this.saveDataLastFeedBreast = 'r';
           }
           this.showHappiness();
       }
 
     } else if (this.currentFeedMethod == 'bottle') {
         date = new Date(this.feedStartTimeISOString);
-        date = new Date(date.getTime() + (date.getTimezoneOffset() * 60000));
+        date = new Date(date.getTime() + this.timezoneOffset);
         this.saveDataFeedStartTime = date;
         this.saveDataFeedEndTime = this.saveDataFeedStartTime;
         //TODO Check time from bottle
@@ -275,7 +314,7 @@ export class EatPage {
         this.showHappiness();
     } else if (this.currentFeedMethod == 'solid') {
         date = new Date(this.feedStartTimeISOString);
-        date = new Date(date.getTime() + (date.getTimezoneOffset() * 60000));
+        date = new Date(date.getTime() + this.timezoneOffset);
         this.saveDataFeedStartTime = date;
         this.saveDataFeedEndTime = this.saveDataFeedStartTime;
         //TODO Check time from solid

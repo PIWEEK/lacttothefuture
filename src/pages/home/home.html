@@ -1,4 +1,4 @@
-<ion-header>  
+<ion-header>
   <ion-navbar>
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
@@ -18,7 +18,9 @@
           <div class="card-info">
             <div>
               <ion-chip>
-                <ion-label>{{ lastFeedText }}</ion-label>
+                <ion-label>
+                  {{ lastFeedText }}
+                  </ion-label>
               </ion-chip>
             </div>
             <div>
@@ -26,7 +28,8 @@
           </div>
         </div>
         <div class="timer">
-        {{ hoursNextFeed }}
+          <div>{{ hoursNextFeed }}</div>
+          <div class="hour">({{ this.repository.cardsData.nextFeed.prediction | date: 'HH:mm'}})</div>
         </div>
       </div>
       <div class="card-data">
@@ -46,7 +49,8 @@
             {{ repository.cardsData.nextFeed.mealsToday }}
           </div>
           <div class="item">
-            {{ hoursFromLastFeeding }}
+            <div>{{ hoursFromLastFeeding }}</div>
+            <div>({{ this.repository.cardsData.nextFeed.feedStartTime | date: 'HH:mm' }})</div>
           </div>
           <div class="item">
             <img [src]="'assets/img/happy' + repository.cardsData.nextFeed.happy+ '.png'" class="happy" *ngIf="repository.cardsData.nextFeed.happy > 0"/>
