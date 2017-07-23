@@ -135,7 +135,7 @@ export class HomePage {
 
           }
 
-          millis = now - this.repository.cardsData.nextFeed.feedEndTime;
+          millis = now - this.repository.cardsData.nextFeed.feedStartTime;
           if (millis > 0){
             hours = Math.floor(millis / 3600000);
             mins = Math.floor(((millis - (hours * 3600000)) / 60000));

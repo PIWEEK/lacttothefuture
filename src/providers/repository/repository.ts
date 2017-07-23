@@ -205,7 +205,7 @@ export class RepositoryProvider {
       this.currentBaby.doctorHistory = [];
     }
 
-     this.currentBaby.doctorHistory = [];
+
 
     var doctorData = {
           timestamp: date.getTime(),
