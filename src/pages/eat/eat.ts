@@ -275,9 +275,9 @@ export class EatPage {
           this.showHappiness();
         }
       } else {
-          this.saveDataFeedStartTime = new Date(this.feedStartTimeISOString);
-          this.saveDataFeedEndTime = new Date(this.feedEndTimeISOString);
-          this.saveDataTotalFeedingTime = new Date(this.feedEndTimeISOString).getTime() - this.saveDataFeedStartTime.getTime();
+          this.saveDataFeedStartTime = new Date(new Date(this.feedStartTimeISOString).getTime() + this.timezoneOffset);
+          this.saveDataFeedEndTime = new Date(new Date(this.feedEndTimeISOString).getTime() + this.timezoneOffset);
+          this.saveDataTotalFeedingTime = this.saveDataFeedEndTime.getTime() - this.saveDataFeedStartTime.getTime();
           if (this.feedBreast == 'l'){
             this.saveDataLeftFeedingTime = this.saveDataTotalFeedingTime;
             this.saveDataRightFeedingTime = 0;

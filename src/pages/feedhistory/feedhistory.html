@@ -13,7 +13,7 @@
 
 <ion-content>
   <ion-list>
-    <ion-item-sliding *ngFor="let entry of repository.currentBaby.feedHistory">
+    <ion-item-sliding *ngFor="let entry of repository.currentBaby.feedHistory; let i = index">
       <ion-item>
         <ion-avatar item-start>
           <img [src]="'assets/img/' + selectFeedIcon(entry) + '.png'" class="icon"/>
@@ -23,10 +23,10 @@
               <ion-row>
                 <ion-col col-7>
                     <div class="infoSection">
-                      <div>Fin alimentación</div>
-                      <div class="date"><ion-icon name="clock"></ion-icon> {{ entry.feedEndTime | date: 'dd/MM/yyyy HH:mm' }}</div>
                       <div>Comienzo alimentación</div>
                       <div class="date"><ion-icon name="clock"></ion-icon> {{ entry.feedStartTime | date: 'dd/MM/yyyy HH:mm' }}</div>
+                      <div>Fin alimentación</div>
+                      <div class="date"><ion-icon name="clock"></ion-icon> {{ entry.feedEndTime | date: 'dd/MM/yyyy HH:mm' }}</div>
                     </div>
                     <div class="happy_container">
                       <img [src]="'assets/img/happyc' + entry.happy+ '.png'" class="happy"/>
@@ -79,11 +79,7 @@
         </div>
       </ion-item>
       <ion-item-options side="right">
-        <button ion-button color="primary">
-          <ion-icon name="brush"></ion-icon>
-          Modificar
-        </button>
-        <button ion-button color="secondary">
+        <button ion-button color="secondary" (click)="deleteFeed(i)">
           <ion-icon name="trash"></ion-icon>
           Borrar
         </button>

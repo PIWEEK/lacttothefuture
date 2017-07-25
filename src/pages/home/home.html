@@ -29,7 +29,7 @@
         </div>
         <div class="timer">
           <div>{{ hoursNextFeed }}</div>
-          <div class="hour">({{ this.repository.cardsData.nextFeed.prediction | date: 'HH:mm'}})</div>
+          <div class="hour" *ngIf="repository.cardsData.nextFeed.happy > 0">({{ this.repository.cardsData.nextFeed.prediction | date: 'HH:mm'}})</div>
         </div>
       </div>
       <div class="card-data">
@@ -49,8 +49,8 @@
             {{ repository.cardsData.nextFeed.mealsToday }}
           </div>
           <div class="item">
-            <div>{{ hoursFromLastFeeding }}</div>
-            <div>({{ this.repository.cardsData.nextFeed.feedStartTime | date: 'HH:mm' }})</div>
+            <div *ngIf="repository.cardsData.nextFeed.happy > 0">{{ hoursFromLastFeeding }}</div>
+            <div *ngIf="repository.cardsData.nextFeed.happy > 0">({{ this.repository.cardsData.nextFeed.feedStartTime | date: 'HH:mm' }})</div>
           </div>
           <div class="item">
             <img [src]="'assets/img/happy' + repository.cardsData.nextFeed.happy+ '.png'" class="happy" *ngIf="repository.cardsData.nextFeed.happy > 0"/>

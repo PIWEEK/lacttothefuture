@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { RepositoryProvider } from "../../providers/repository/repository";
+import { AlertController } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -9,7 +10,7 @@ import { RepositoryProvider } from "../../providers/repository/repository";
 })
 export class FeedhistoryPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public repository: RepositoryProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public repository: RepositoryProvider, public alertCtrl: AlertController) {
 
   }
 
@@ -36,6 +37,39 @@ export class FeedhistoryPage {
       } else {
         return "0m 0s";
       }
+  }
+
+  public deleteFeed(index){
+    let alertPopup = this.alertCtrl.create({
+        title: 'Borrar esta alimentación',
+        message: '¿Seguro que quieres borrar esta alimentación?',
+        buttons: [{
+                text: 'Borrar',
+                handler: () => {
+                    alertPopup.dismiss().then(() => {
+                        this.confirmDeleteFeed(index);
+                    });
+                    return false;
+                }
+            },
+            {
+                text: 'Cancelar',
+                handler: () => {
+                  //Nothing
+                }
+            }]
+    });
+
+    // Show the alert
+    alertPopup.present();
+
+    // Return false to avoid the page to be popped up
+    return false;
+
+  }
+
+  public confirmDeleteFeed(index){
+    this.repository.deleteFeed(index);
   }
 
 

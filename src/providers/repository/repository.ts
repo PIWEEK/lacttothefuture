@@ -191,12 +191,27 @@ export class RepositoryProvider {
           solidName: solidName
     }
 
-    this.currentBaby.feedHistory.push(feedData);
+    var i =0;
+    while ((i<this.currentBaby.feedHistory.length) && (this.currentBaby.feedHistory[i].feedStartTime < feedData.feedStartTime)){
+      i+=1;
+    }
+
+
+    this.currentBaby.feedHistory.splice(i, 0, feedData);
 
 
     this.saveToLocalStorage();
 
     this.updateCardData();
+  }
+
+  deleteFeed(index){
+    if (this.currentBaby.feedHistory.length > index){
+      this.currentBaby.feedHistory.splice(index, 1);
+      this.saveToLocalStorage();
+      this.updateCardData();
+    }
+
   }
 
   saveDoctorData(date, comment) {
