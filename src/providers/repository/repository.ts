@@ -206,6 +206,7 @@ export class RepositoryProvider {
   }
 
   deleteFeed(index){
+    console.log("Deleting feed "+index);
     if (this.currentBaby.feedHistory.length > index){
       this.currentBaby.feedHistory.splice(index, 1);
       this.saveToLocalStorage();
@@ -415,7 +416,7 @@ export class RepositoryProvider {
   predictFeed() {
     //TODO: Call ML
     //For now, 3 hours later
-    return this.currentBaby.feedHistory[this.currentBaby.feedHistory.length-1].feedEndTime + 180 * 60000;
+    return this.currentBaby.feedHistory[this.currentBaby.feedHistory.length-1].feedStartTime + 180 * 60000;
   }
 
   predictSleepTime() {

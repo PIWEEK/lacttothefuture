@@ -9,6 +9,7 @@ import { AlertController } from 'ionic-angular';
   templateUrl: 'feedhistory.html',
 })
 export class FeedhistoryPage {
+  private reversedHistory: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public repository: RepositoryProvider, public alertCtrl: AlertController) {
 
@@ -16,6 +17,11 @@ export class FeedhistoryPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad FeedhistoryPage');
+  }
+
+  ionViewDidEnter() {
+    this.reversedHistory = [].concat(this.repository.currentBaby.feedHistory);
+    this.reversedHistory.reverse();
   }
 
   public selectFeedIcon(entry){
@@ -69,7 +75,12 @@ export class FeedhistoryPage {
   }
 
   public confirmDeleteFeed(index){
-    this.repository.deleteFeed(index);
+    //The feed is reversed
+    let reversedIndex = this.reversedHistory.length - index - 1;
+    this.repository.deleteFeed(reversedIndex);
+
+    this.reversedHistory = [].concat(this.repository.currentBaby.feedHistory);
+    this.reversedHistory.reverse();
   }
 
 

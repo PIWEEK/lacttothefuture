@@ -46,6 +46,10 @@ page-feedhistory {
         }
     }
 
+    .item-md ion-avatar[item-left], .item-md ion-thumbnail[item-left], .item-md ion-avatar[item-start], .item-md ion-thumbnail[item-start] {
+        margin-right: 0;
+    }
+
     .date {
         font-weight: bold;
         color: darkgray;
@@ -58,13 +62,18 @@ page-feedhistory {
         white-space: pre-wrap;
     }
 
-    .happy_container {
-        text-align: left;
-        margin-top: .5em;
+    .entryContainer{
+        position: relative;
+        margin: 0;
+        padding: 0;
     }
 
+
     .happy {
-        width: 2em;
+        width: 1.5em;
+        position:absolute;
+        top: 1.5em;
+        left: 0;
     }
 
     .infoSection {
